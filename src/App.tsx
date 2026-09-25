@@ -66,35 +66,64 @@ export default function App() {
   const [appView, setAppView] = useState<'dashboard' | 'editor'>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_VIEW);
+      console.log('[AuraCV Boot] Storage appView:', stored);
       if (stored === 'dashboard' || stored === 'editor') return stored;
-    } catch (_) {}
+    } catch (e) {
+      console.warn('[AuraCV Boot] Failed reading STORAGE_KEY_VIEW:', e);
+    }
     return 'dashboard'; 
   });
 
   const [editorTab, setEditorTab] = useState<FlowTab>('content');
   const [activeTool, setActiveTool] = useState<ToolView | null>(null);
 
+  // Initialize savedResumes from localStorage with diagnostic logging
   const [savedResumes, setSavedResumes] = useState<SavedResume[]>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_RESUMES);
+      console.log('[AuraCV Boot] Reading STORAGE_KEY_RESUMES:', stored ? `${stored.length} chars` : 'null');
       if (stored) {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.data?.personal) {
+          console.log('[AuraCV Boot] Successfully restored savedResumes:', parsed.map((r: SavedResume) => r.name || r.id));
+          return parsed;
+        }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error('[AuraCV Boot] Error parsing savedResumes from localStorage:', e);
+    }
+    console.log('[AuraCV Boot] Falling back to default INITIAL_RESUMES preset');
     return INITIAL_RESUMES;
   });
 
+  // Initialize activeResumeId from localStorage with diagnostic logging
   const [activeResumeId, setActiveResumeId] = useState<string>(() => {
     try {
       const storedId = localStorage.getItem(STORAGE_KEY_ACTIVE_ID);
-      if (storedId && savedResumes.some((r) => r.id === storedId)) return storedId;
-    } catch (e) {}
-    return savedResumes[0]?.id || INITIAL_RESUMES[0].id;
+      console.log('[AuraCV Boot] Reading STORAGE_KEY_ACTIVE_ID:', storedId);
+      if (storedId) {
+        // Will be validated against savedResumes in state initializer
+        return storedId;
+      }
+    } catch (e) {
+      console.warn('[AuraCV Boot] Error reading activeResumeId:', e);
+    }
+    return INITIAL_RESUMES[0].id;
   });
 
-  const activeSavedResume = savedResumes.find((r) => r.id === activeResumeId) || savedResumes[0] || INITIAL_RESUMES[0];
-  const [resumeData, setResumeData] = useState<ResumeData>(activeSavedResume.data);
+  // Ensure activeSavedResume is valid and target active ID exists in savedResumes list
+  const activeSavedResume = 
+    savedResumes.find((r) => r.id === activeResumeId) || 
+    savedResumes[0] || 
+    INITIAL_RESUMES[0];
+
+  const safeInitialData: ResumeData = (activeSavedResume && activeSavedResume.data && activeSavedResume.data.personal)
+    ? activeSavedResume.data
+    : SOFTWARE_ENGINEER_RESUME;
+
+  console.log('[AuraCV Boot] Active resume candidate:', activeSavedResume?.name, 'ID:', activeSavedResume?.id);
+
+  const [resumeData, setResumeData] = useState<ResumeData>(safeInitialData);
   const [viewMode, setViewMode] = useState<'edit' | 'split' | 'preview'>('split');
 
   const [isExportOpen, setIsExportOpen] = useState(false);
@@ -114,24 +143,44 @@ export default function App() {
   useSync(savedResumes);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY_VIEW, appView);
+    try {
+      localStorage.setItem(STORAGE_KEY_VIEW, appView);
+    } catch (e) {
+      console.error('[AuraCV Save] Failed persisting appView:', e);
+    }
   }, [appView]);
 
   useEffect(() => {
     const target = savedResumes.find((r) => r.id === activeResumeId);
-    if (target) setResumeData(target.data);
+    if (target && target.data) {
+      console.log('[AuraCV Switch] Switched active resume to:', target.name);
+      setResumeData(target.data);
+    }
   }, [activeResumeId]);
 
   useEffect(() => {
-    const updatedList = savedResumes.map((r) =>
-      r.id === activeResumeId
-        ? { ...r, lastModified: Date.now(), targetRole: resumeData.personal.title || r.targetRole, data: resumeData }
-        : r
-    );
-    localStorage.setItem(STORAGE_KEY_RESUMES, JSON.stringify(updatedList));
-    localStorage.setItem(STORAGE_KEY_ACTIVE_ID, activeResumeId);
+    setSavedResumes((prevList) => {
+      const updatedList = prevList.map((r) =>
+        r.id === activeResumeId
+          ? { 
+              ...r, 
+              lastModified: Date.now(), 
+              targetRole: resumeData?.personal?.title || r.targetRole, 
+              data: resumeData 
+            }
+          : r
+      );
+      try {
+        localStorage.setItem(STORAGE_KEY_RESUMES, JSON.stringify(updatedList));
+        localStorage.setItem(STORAGE_KEY_ACTIVE_ID, activeResumeId);
+      } catch (e) {
+        console.error('[AuraCV Save] Error saving to localStorage:', e);
+      }
+      return updatedList;
+    });
+
     setSaveIndicator(true);
-    const timer = setTimeout(() => setSaveIndicator(false), 1500);
+    const timer = setTimeout(() => setSaveIndicator(false), 1200);
     return () => clearTimeout(timer);
   }, [resumeData, activeResumeId]);
 
