@@ -9,6 +9,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { MinimalStudioHeroCard } from './MinimalStudioHeroCard';
+import { Spatial3DCanvas } from './Spatial3DCanvas';
 import { ScrollMotionShowcase } from './ScrollMotionShowcase';
 import { InteractiveMotionPreview } from './InteractiveMotionPreview';
 import { PrivacyPolicyModal } from '../Legal/PrivacyPolicyModal';
@@ -125,6 +126,11 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
         <div className="pt-4 max-w-4xl mx-auto">
           <MinimalStudioHeroCard onStart={() => onStart('register')} />
         </div>
+      </section>
+
+      {/* Reintegrated Scroll-Triggered Spatial 3D Motion Canvas */}
+      <section className="px-4 sm:px-6 lg:px-12 max-w-6xl mx-auto">
+        <Spatial3DCanvas onStartStudio={() => onStart('register')} />
       </section>
 
       {/* Scroll-Triggered Motion Pipeline Showcase */}

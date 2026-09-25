@@ -1,274 +1,270 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { 
   Sparkles, 
-  ShieldCheck, 
-  CheckCircle2, 
-  Zap, 
-  Layers, 
   Target, 
   Wand2, 
-  FileText,
-  Rotate3d,
-  MousePointerClick
+  CheckCircle2, 
+  ArrowRight, 
+  ShieldCheck, 
+  Layers,
+  FileText
 } from 'lucide-react';
 
 interface Props {
-  onStartStudio: () => void;
+  onStartStudio?: () => void;
 }
 
 export const Spatial3DCanvas: React.FC<Props> = ({ onStartStudio }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [activeLayer, setActiveLayer] = useState<'all' | 'ats' | 'xyz'>('all');
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [activeTab, setActiveTab] = useState<'ats' | 'xyz'>('xyz');
 
-  // Motion values for 3D spatial tilt
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  // Motion values for desktop 3D tilt
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-  // Smooth springs for fluid 60fps movement
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [18, -18]), {
-    stiffness: 180,
-    damping: 20,
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), {
+    stiffness: 150,
+    damping: 18,
   });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-22, 22]), {
-    stiffness: 180,
-    damping: 20,
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), {
+    stiffness: 150,
+    damping: 18,
   });
+
+  useEffect(() => {
+    // Detect touch-only screen
+    const checkTouch = () => {
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    checkTouch();
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
+    if (isTouchDevice || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
-
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-
-    x.set(xPct);
-    y.set(yPct);
+    const x = (e.clientX - rect.left) / width - 0.5;
+    const y = (e.clientY - rect.top) / height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
-    x.set(0);
-    y.set(0);
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
+    if (isTouchDevice) return;
+    mouseX.set(0);
+    mouseY.set(0);
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto py-8 sm:py-12 px-4 sm:px-6">
-      {/* Top Interactive Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-zinc-950 text-white flex items-center justify-center shadow-lg">
-            <Rotate3d className="w-5 h-5 text-emerald-400 animate-pulse" />
-          </div>
-          <div>
-            <h3 className="font-display font-bold text-lg sm:text-xl text-zinc-900">
-              Interactive 3D Spatial Canvas
-            </h3>
-            <p className="text-xs text-zinc-500">
-              Move your cursor or swipe over the canvas to explore floating 3D document layers
-            </p>
-          </div>
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="w-full max-w-5xl mx-auto py-6 sm:py-10 px-2 sm:px-4"
+    >
+      <div className="text-center space-y-2 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 text-zinc-800 text-xs font-semibold border border-zinc-200">
+          <Sparkles className="w-3.5 h-3.5 text-zinc-900" />
+          <span>Interactive 3D Motion Canvas</span>
         </div>
-
-        {/* 3D View Layer Filter Controls */}
-        <div className="flex items-center gap-1.5 p-1 bg-zinc-200/70 rounded-2xl border border-zinc-300/80">
-          {[
-            { id: 'all', label: 'Complete 3D View' },
-            { id: 'ats', label: '3D ATS Shield' },
-            { id: 'xyz', label: '3D XYZ Formula' },
-          ].map((mode) => (
-            <button
-              key={mode.id}
-              type="button"
-              onClick={() => setActiveLayer(mode.id as any)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                activeLayer === mode.id
-                  ? 'bg-zinc-950 text-white shadow-md'
-                  : 'text-zinc-600 hover:text-zinc-900'
-              }`}
-            >
-              {mode.label}
-            </button>
-          ))}
-        </div>
+        <h2 className="text-2xl sm:text-3xl font-display font-bold text-zinc-950 tracking-tight">
+          Executive Resume Architecture
+        </h2>
+        <p className="text-xs sm:text-sm text-zinc-600">
+          Hover or tilt to explore live ATS parser validation and Google XYZ metric rewrite engines.
+        </p>
       </div>
 
-      {/* 3D Viewport Container */}
-      <div
-        ref={containerRef}
+      {/* Perspective Container */}
+      <div 
+        className="perspective-1000 w-full"
         onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="relative w-full min-h-[460px] sm:min-h-[540px] lg:min-h-[600px] rounded-3xl bg-gradient-to-b from-zinc-900 via-zinc-950 to-black p-6 sm:p-12 flex items-center justify-center overflow-hidden border border-zinc-800 shadow-2xl cursor-grab active:cursor-grabbing"
-        style={{ perspective: 1200 }}
       >
-        {/* Ambient Dynamic Background Lighting */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-emerald-500/15 rounded-full blur-[120px]" />
-          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-500/15 rounded-full blur-[120px]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-[140px]" />
-          <div className="absolute inset-0 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:24px_24px] opacity-25" />
-        </div>
-
-        {/* 3D Floating Interactive Document Scene */}
         <motion.div
+          ref={cardRef}
           style={{
-            rotateX,
-            rotateY,
+            rotateX: isTouchDevice ? 0 : rotateX,
+            rotateY: isTouchDevice ? 0 : rotateY,
             transformStyle: 'preserve-3d',
           }}
-          className="relative w-full max-w-2xl bg-white/95 backdrop-blur-xl rounded-2xl p-6 sm:p-10 shadow-2xl border border-white/40 text-zinc-900 transition-shadow duration-300"
+          animate={
+            isTouchDevice
+              ? {
+                  rotateX: [2, -2, 2],
+                  rotateY: [-3, 3, -3],
+                }
+              : undefined
+          }
+          transition={
+            isTouchDevice
+              ? {
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }
+              : undefined
+          }
+          className="w-full bg-white rounded-3xl border border-zinc-200/90 shadow-xl overflow-hidden text-zinc-900 relative transition-shadow hover:shadow-2xl"
         >
-          {/* Layer 0: Base Resume Document Paper (translateZ: 0px) */}
-          <div
-            className="space-y-5"
-            style={{ transform: 'translateZ(0px)' }}
-          >
-            {/* Header Block */}
-            <div className="flex items-start justify-between pb-4 border-b border-zinc-200">
+          {/* Unified Zinc & Emerald Ambient Backdrop Glow */}
+          <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-zinc-200/50 rounded-full blur-3xl pointer-events-none -z-10" />
+
+          {/* Header Controls */}
+          <div className="bg-zinc-950 text-white px-5 sm:px-8 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-zinc-800">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0">
+                <FileText className="w-4 h-4 text-white" />
+              </div>
               <div>
-                <h2 className="text-2xl sm:text-3xl font-display font-bold text-zinc-950 tracking-tight">
-                  ALEXANDER WRIGHT
-                </h2>
-                <p className="text-xs sm:text-sm font-semibold text-emerald-700 tracking-wide mt-0.5">
-                  Senior Cloud Systems & Platform Architect
-                </p>
-              </div>
-              <div className="text-right text-[10px] text-zinc-400 font-mono space-y-0.5 hidden sm:block">
-                <p>alexander@auracv.studio</p>
-                <p>San Francisco, CA</p>
-                <p>github.com/alexwright</p>
-              </div>
-            </div>
-
-            {/* Experience Bullet Section */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500">
-                  PROFESSIONAL EXPERIENCE
-                </h4>
-                <span className="text-[10px] font-bold text-zinc-400">2021 – Present</span>
-              </div>
-
-              <div className="p-4 rounded-xl bg-zinc-50 border border-zinc-200/80 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-sm text-zinc-900">Lead Infrastructure Engineer</span>
-                  <span className="text-xs text-zinc-500 font-medium">Stripe Inc.</span>
-                </div>
-                <p className="text-xs text-zinc-600 leading-relaxed font-body">
-                  • Architected high-throughput Kubernetes cluster pipelines serving 120M daily transactions with 99.99% availability.
+                <h3 className="font-display font-bold text-sm sm:text-base text-white">
+                  AuraCV Studio Pipeline
+                </h3>
+                <p className="text-[11px] text-zinc-400">
+                  Real-time document parser & formula engine
                 </p>
               </div>
             </div>
 
-            {/* Core Skills Tags */}
-            <div className="pt-2 flex flex-wrap gap-1.5 text-xs">
-              {['TypeScript', 'React 19', 'Go', 'Kubernetes', 'AWS Lambda', 'GraphQL', 'PostgreSQL'].map((sk) => (
-                <span key={sk} className="px-2.5 py-1 rounded-md bg-zinc-100 text-zinc-700 font-semibold border border-zinc-200 text-[11px]">
-                  {sk}
-                </span>
-              ))}
+            {/* Segmented Tab Controls */}
+            <div className="flex items-center gap-1 bg-zinc-900 p-1 rounded-xl border border-zinc-800 w-full sm:w-auto justify-center">
+              <button
+                type="button"
+                onClick={() => setActiveTab('xyz')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeTab === 'xyz'
+                    ? 'bg-white text-zinc-950 shadow-xs'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                <Wand2 className="w-3.5 h-3.5" />
+                <span>XYZ Bullets</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('ats')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeTab === 'ats'
+                    ? 'bg-white text-zinc-950 shadow-xs'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                <Target className="w-3.5 h-3.5" />
+                <span>ATS Audit</span>
+              </button>
             </div>
           </div>
 
-          {/* LAYER 1: Floating 3D ATS Audit Shield (translateZ: 60px) */}
-          {(activeLayer === 'all' || activeLayer === 'ats') && (
-            <motion.div
-              style={{ transform: 'translateZ(60px)' }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4 }}
-              className="absolute -top-6 -right-4 sm:-right-8 bg-zinc-950/95 text-white p-4 sm:p-5 rounded-2xl shadow-2xl border border-zinc-700/80 backdrop-blur-2xl max-w-[240px] sm:max-w-[270px] space-y-3"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
-                    <ShieldCheck className="w-4 h-4" />
+          {/* Studio Body */}
+          <div className="p-6 sm:p-8 bg-gradient-to-b from-zinc-50/50 via-white to-zinc-50/30">
+            {activeTab === 'xyz' ? (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider">
+                    Google XYZ Formula
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                    +48% Recruiter Impact
+                  </span>
+                </div>
+
+                <div className="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200/90 shadow-2xs space-y-3">
+                  <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                    <span>Transformed Experience Outcome:</span>
                   </div>
-                  <span className="text-xs font-bold tracking-tight text-white">
-                    ATS Audit Shield
+                  <p className="text-xs sm:text-sm text-zinc-800 leading-relaxed font-body font-medium">
+                    "Architected high-throughput CI/CD deployment pipeline delivering 140+ monthly releases, reducing deployment cycle time by 48% across 12 microservices."
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+                  <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200/80">
+                    <span className="text-[10px] font-mono font-bold text-zinc-400 uppercase">Action Verb</span>
+                    <p className="font-bold text-zinc-900 mt-0.5">Architected</p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200/80">
+                    <span className="text-[10px] font-mono font-bold text-zinc-400 uppercase">Measured Metric</span>
+                    <p className="font-bold text-emerald-700 mt-0.5">48% Time Saved</p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200/80">
+                    <span className="text-[10px] font-mono font-bold text-zinc-400 uppercase">Scope</span>
+                    <p className="font-bold text-zinc-900 mt-0.5">12 Microservices</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider">
+                    Parser Verification
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-zinc-950 text-white">
+                    98% Parse Index
                   </span>
                 </div>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
-                  98/100
-                </span>
-              </div>
 
-              <p className="text-[11px] text-zinc-300 leading-snug font-medium">
-                100% Workday & Greenhouse parser compliance verified.
-              </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="p-3.5 rounded-xl bg-white border border-zinc-200/80 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <span className="text-xs font-medium text-zinc-800">TypeScript & React</span>
+                    </div>
+                    <span className="text-[11px] font-mono text-zinc-400">Match 5x</span>
+                  </div>
 
-              <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 pt-1 border-t border-zinc-800">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span>0 Parsing Errors Detected</span>
-              </div>
-            </motion.div>
-          )}
+                  <div className="p-3.5 rounded-xl bg-white border border-zinc-200/80 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <span className="text-xs font-medium text-zinc-800">AWS & Infrastructure</span>
+                    </div>
+                    <span className="text-[11px] font-mono text-zinc-400">Match 3x</span>
+                  </div>
 
-          {/* LAYER 2: Floating 3D XYZ Bullet Formula Card (translateZ: 45px) */}
-          {(activeLayer === 'all' || activeLayer === 'xyz') && (
-            <motion.div
-              style={{ transform: 'translateZ(45px)' }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="absolute -bottom-6 -left-4 sm:-left-8 bg-gradient-to-br from-emerald-900/95 to-zinc-950 text-white p-4 sm:p-5 rounded-2xl shadow-2xl border border-emerald-500/40 backdrop-blur-2xl max-w-[280px] sm:max-w-[320px] space-y-2.5"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Wand2 className="w-4 h-4 text-emerald-400 animate-spin-slow" />
-                  <span className="text-xs font-bold text-emerald-300 uppercase tracking-wider">
-                    Google XYZ Bullet Engine
-                  </span>
+                  <div className="p-3.5 rounded-xl bg-white border border-zinc-200/80 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <span className="text-xs font-medium text-zinc-800">CI/CD Pipelines</span>
+                    </div>
+                    <span className="text-[11px] font-mono text-zinc-400">Match 4x</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-white border border-zinc-200/80 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <span className="text-xs font-medium text-zinc-800">System Architecture</span>
+                    </div>
+                    <span className="text-[11px] font-mono text-zinc-400">Match 2x</span>
+                  </div>
                 </div>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300">
-                  +48% Impact
-                </span>
               </div>
+            )}
+          </div>
 
-              <p className="text-[11px] text-emerald-100/90 leading-relaxed font-mono bg-black/40 p-2.5 rounded-lg border border-emerald-500/20">
-                "Reduced P99 deployment cycle time by 48% across 14 microservices."
-              </p>
-            </motion.div>
-          )}
+          {/* Footer Bar */}
+          <div className="bg-zinc-50 px-6 sm:px-8 py-3.5 border-t border-zinc-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-2 text-xs text-zinc-600">
+              <ShieldCheck className="w-4 h-4 text-zinc-900" />
+              <span>Workday & Greenhouse Parser Certified</span>
+            </div>
+            {onStartStudio && (
+              <button
+                type="button"
+                onClick={onStartStudio}
+                className="w-full sm:w-auto px-5 py-2 bg-zinc-950 hover:bg-zinc-800 text-white rounded-xl text-xs font-semibold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <span>Launch Free Studio</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
         </motion.div>
-
-        {/* Floating Instruction Callout */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none bg-zinc-900/80 backdrop-blur-md px-4 py-2 rounded-full border border-zinc-700/80 text-xs font-bold text-zinc-300 flex items-center gap-2 shadow-lg">
-          <MousePointerClick className="w-3.5 h-3.5 text-emerald-400 animate-bounce" />
-          <span>Interactive 3D Perspective Canvas • Hover or Tilt</span>
-        </div>
       </div>
-
-      {/* Direct CTA Bar */}
-      <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-zinc-950 text-white p-6 rounded-3xl border border-zinc-800 shadow-xl">
-        <div>
-          <h4 className="font-display font-bold text-lg text-white">
-            Ready to build your 3D-optimized executive resume?
-          </h4>
-          <p className="text-xs text-zinc-400 mt-0.5">
-            Access curated templates, real-time ATS auditing, and instant PDF exports.
-          </p>
-        </div>
-
-        <button
-          type="button"
-          onClick={onStartStudio}
-          className="w-full sm:w-auto px-7 py-3 bg-white text-zinc-950 hover:bg-zinc-100 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-lg active:scale-95 whitespace-nowrap"
-        >
-          Launch Free Studio
-        </button>
-      </div>
-    </div>
+    </motion.div>
   );
 };
