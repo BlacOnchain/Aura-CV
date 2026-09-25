@@ -142,13 +142,13 @@ export const FormContainer: React.FC<Props> = ({ data, onChange }) => {
   return (
     <div className="flex flex-col h-full bg-transparent">
       {/* Top Progress Block */}
-      <div className="bg-[#FCF9F5] border border-[#EBE6DD] px-5 py-4 shrink-0 rounded-2xl mb-6">
+      <div className="bg-zinc-50 border border-zinc-200 px-5 py-4 shrink-0 rounded-2xl mb-6">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-[#1A1917] uppercase tracking-wider">
+            <span className="text-xs font-bold text-zinc-900 uppercase tracking-wider">
               Profile Completeness
             </span>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#1A1917] text-white">
+            <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-zinc-900 text-white">
               {completionPercent}%
             </span>
           </div>
@@ -158,9 +158,9 @@ export const FormContainer: React.FC<Props> = ({ data, onChange }) => {
         </div>
 
         {/* Progress Bar */}
-        <div className="w-full bg-[#EBE6DD]/40 h-1 rounded-full overflow-hidden">
+        <div className="w-full bg-zinc-200 h-1 rounded-full overflow-hidden">
           <div
-            className="bg-[#1A1917] h-full transition-all duration-500"
+            className="bg-emerald-600 h-full transition-all duration-500"
             style={{ width: `${completionPercent}%` }}
           />
         </div>
@@ -179,7 +179,7 @@ export const FormContainer: React.FC<Props> = ({ data, onChange }) => {
                 animationDelay: `${idx * 60}ms`,
                 animationFillMode: 'forwards',
               }}
-              className="opacity-0 animate-stagger-fade-in bg-[#FCF9F5] border border-[#EBE6DD] rounded-2xl overflow-hidden shadow-xs hover:border-[#D6CFBC] hover:translate-y-[-1px] transition-all duration-300"
+              className="opacity-0 animate-stagger-fade-in bg-zinc-50/80 border border-zinc-200 rounded-2xl overflow-hidden shadow-xs hover:border-zinc-300 hover:translate-y-[-1px] transition-all duration-300"
             >
               <button
                 type="button"
@@ -188,7 +188,7 @@ export const FormContainer: React.FC<Props> = ({ data, onChange }) => {
               >
                 <div className="flex items-center gap-3">
                   <Icon className="w-4.5 h-4.5 text-zinc-400 shrink-0" />
-                  <span className="font-bold text-sm text-[#1A1917] tracking-tight">{sec.label}</span>
+                  <span className="font-bold text-sm text-zinc-900 tracking-tight">{sec.label}</span>
                 </div>
                 <ChevronDown
                   className={`w-4 h-4 text-zinc-400 transition-transform duration-300 ${
@@ -198,7 +198,7 @@ export const FormContainer: React.FC<Props> = ({ data, onChange }) => {
               </button>
 
               {isExpanded && (
-                <div className="bg-white p-6 border-t border-[#EBE6DD]/50">
+                <div className="bg-white p-6 border-t border-zinc-200">
                   {sec.component}
                 </div>
               )}

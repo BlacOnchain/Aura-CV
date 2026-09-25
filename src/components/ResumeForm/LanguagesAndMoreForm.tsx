@@ -49,7 +49,7 @@ export const LanguagesAndMoreForm: React.FC<Props> = ({
     <div className="space-y-6">
       {/* Languages */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-[#EBE6DD]/60">
+        <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
           <div>
             <p className="text-xs text-zinc-500">
               Fluency levels (e.g. English, Yoruba)
@@ -59,7 +59,7 @@ export const LanguagesAndMoreForm: React.FC<Props> = ({
           <button
             type="button"
             onClick={handleAddLanguage}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#1A1917] bg-[#EBE6DD]/60 hover:bg-[#EBE6DD] rounded-lg transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-900 bg-zinc-100 hover:bg-zinc-200 rounded-lg transition-colors cursor-pointer border border-zinc-200"
           >
             <Plus className="w-4 h-4" />
             Add Language
@@ -82,14 +82,14 @@ export const LanguagesAndMoreForm: React.FC<Props> = ({
                   value={lang.language || ''}
                   onChange={(e) => handleUpdateLanguage(lang.id, 'language', e.target.value)}
                   placeholder="Language (e.g. English)"
-                  className="flex-1 px-2.5 py-1 text-xs sm:text-sm bg-white border border-slate-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-indigo-500 font-medium"
+                  className="flex-1 px-2.5 py-1 text-xs sm:text-sm bg-white border border-slate-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-zinc-900 font-medium"
                 />
                 <input
                   type="text"
                   value={lang.proficiency || ''}
                   onChange={(e) => handleUpdateLanguage(lang.id, 'proficiency', e.target.value)}
                   placeholder="Proficiency (e.g. Native / C1)"
-                  className="w-28 px-2.5 py-1 text-xs bg-white border border-slate-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-indigo-500 text-slate-600"
+                  className="w-28 px-2.5 py-1 text-xs bg-white border border-slate-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-zinc-900 text-slate-600"
                 />
                 <button
                   type="button"
@@ -105,8 +105,8 @@ export const LanguagesAndMoreForm: React.FC<Props> = ({
       </div>
 
       {/* References & Section Visibility Settings */}
-      <div className="space-y-4 pt-4 border-t border-[#EBE6DD]/60">
-        <div className="pb-3 border-b border-[#EBE6DD]/60">
+      <div className="space-y-4 pt-4 border-t border-zinc-200">
+        <div className="pb-3 border-b border-zinc-200">
           <p className="text-xs text-zinc-500">
             Turn sections on or off to tailor your resume layout
           </p>

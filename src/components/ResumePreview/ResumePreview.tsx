@@ -220,7 +220,7 @@ export const ResumePreview: React.FC<Props> = ({
           <div
             style={{
               transform: `scale(${finalScale})`,
-              transformOrigin: 'center center',
+              transformOrigin: 'top center',
               width: '820px',
             }}
             className="transition-transform duration-200 shrink-0 shadow-xl rounded-xs"

@@ -57,7 +57,7 @@ export const SummaryForm: React.FC<Props> = ({ summary, resumeData, onChange }) 
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#EBE6DD]/60 gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-zinc-200 gap-3">
         <div>
           <p className="text-xs text-zinc-500">
             A concise 3-4 sentence hook highlighting your core competencies and value proposition

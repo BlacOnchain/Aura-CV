@@ -148,8 +148,8 @@ export const SkillsForm: React.FC<Props> = ({ skillCategories, onChange, targetR
       />
 
       {/* Categorized Domains & Resume Groupings */}
-      <div className="space-y-6 pt-4 border-t border-[#EBE6DD]/60">
-        <div className="flex items-center justify-between pb-3 border-b border-[#EBE6DD]/60">
+      <div className="space-y-6 pt-4 border-t border-zinc-200">
+        <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
           <div>
             <p className="text-xs text-zinc-500">
               Customize domain headers and explanatory context for your ATS resume layout
@@ -159,7 +159,7 @@ export const SkillsForm: React.FC<Props> = ({ skillCategories, onChange, targetR
           <button
             type="button"
             onClick={handleAddCategory}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#1A1917] bg-[#EBE6DD]/60 hover:bg-[#EBE6DD] rounded-lg transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-900 bg-zinc-100 hover:bg-zinc-200 rounded-lg transition-colors cursor-pointer border border-zinc-200"
           >
             <Plus className="w-4 h-4" />
             Add Domain
@@ -167,14 +167,14 @@ export const SkillsForm: React.FC<Props> = ({ skillCategories, onChange, targetR
         </div>
 
         {skillCategories.length === 0 && (
-          <div className="text-center py-8 px-4 border border-dashed border-[#EBE6DD] rounded-2xl bg-transparent">
+          <div className="text-center py-8 px-4 border border-dashed border-zinc-200 rounded-2xl bg-transparent">
             <Cpu className="w-8 h-8 text-zinc-400 mx-auto mb-2" />
             <p className="text-sm font-medium text-slate-700">No skill categories added</p>
             <p className="text-xs text-slate-500 mt-1 mb-4">Add your technical competencies</p>
             <button
               type="button"
               onClick={handleAddCategory}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#1A1917] hover:bg-zinc-800 rounded-lg shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg shadow-xs cursor-pointer"
             >
               <Plus className="w-4 h-4" /> Add Skill Category
             </button>
@@ -188,10 +188,10 @@ export const SkillsForm: React.FC<Props> = ({ skillCategories, onChange, targetR
             return (
               <div
                 key={cat.id}
-                className="pb-8 border-b border-[#EBE6DD]/60 last:border-0 last:pb-0 relative space-y-3.5"
+                className="pb-8 border-b border-zinc-200/80 last:border-0 last:pb-0 relative space-y-3.5"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 bg-[#EBE6DD]/30 px-2 py-0.5 rounded-md border border-[#EBE6DD]/60">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 bg-zinc-100 px-2 py-0.5 rounded-md border border-zinc-200">
                     Domain #{index + 1}
                   </span>
                   <button

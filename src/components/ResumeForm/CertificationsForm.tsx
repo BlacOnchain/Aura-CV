@@ -30,7 +30,7 @@ export const CertificationsForm: React.FC<Props> = ({ certifications, onChange }
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between pb-3 border-b border-[#EBE6DD]/60">
+      <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
         <div>
           <p className="text-xs text-zinc-500">
             Verified credentials, language proficiencies (e.g. C1 Advanced English), or cloud certificates
@@ -40,7 +40,7 @@ export const CertificationsForm: React.FC<Props> = ({ certifications, onChange }
         <button
           type="button"
           onClick={handleAdd}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#1A1917] bg-[#EBE6DD]/60 hover:bg-[#EBE6DD] rounded-lg transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-900 bg-zinc-100 hover:bg-zinc-200 rounded-lg transition-colors cursor-pointer border border-zinc-200"
         >
           <Plus className="w-4 h-4" />
           Add Certificate

@@ -8,7 +8,8 @@ import {
   Sparkles,
   Wand2,
   Target,
-  FileSpreadsheet
+  FileSpreadsheet,
+  ExternalLink
 } from 'lucide-react';
 import { AuraAestheticIllustration } from './AuraAestheticIllustration';
 import { PrivacyPolicyModal } from '../Legal/PrivacyPolicyModal';
@@ -209,6 +210,19 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
               <FileText className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="font-display font-bold text-zinc-900 text-sm">AuraCV Studio</span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <a 
+              href="https://blaconchain.github.io/Portfolio/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-900 text-white hover:bg-zinc-800 font-medium text-[11px] transition-all shadow-xs group"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Creator Portfolio</span>
+              <ExternalLink className="w-3 h-3 text-zinc-400 group-hover:text-white transition-colors" />
+            </a>
           </div>
 
           <div className="flex items-center gap-3 text-[11px]">

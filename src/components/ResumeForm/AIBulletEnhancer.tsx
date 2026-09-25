@@ -78,7 +78,7 @@ export const AIBulletEnhancer: React.FC<Props> = ({
   return (
     <div className="relative inline-flex items-center gap-1.5 shrink-0">
       {/* Primary Action Button */}
-      <div className="inline-flex rounded-lg shadow-2xs border border-[#EBE6DD] bg-white text-[#1A1917] hover:bg-zinc-50 transition-all">
+      <div className="inline-flex rounded-lg shadow-2xs border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 transition-all">
         <button
           type="button"
           onClick={() => enhanceWithMode(defaultMode)}
@@ -104,7 +104,7 @@ export const AIBulletEnhancer: React.FC<Props> = ({
           type="button"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           disabled={isLoading || !currentText.trim()}
-          className="px-1 text-zinc-500 hover:bg-zinc-100 border-l border-[#EBE6DD] rounded-r-lg disabled:opacity-40 cursor-pointer"
+          className="px-1 text-zinc-500 hover:bg-zinc-100 border-l border-zinc-200 rounded-r-lg disabled:opacity-40 cursor-pointer"
           title="Choose improvement strategy"
         >
           <ChevronDown className="w-3 h-3" />

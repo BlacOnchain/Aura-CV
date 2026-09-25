@@ -91,22 +91,22 @@ export const DatabaseView: React.FC<Props> = ({
   return (
     <div className="flex flex-col h-full bg-transparent">
       {/* Header Banner */}
-      <div className="bg-white p-5 rounded-2xl border border-[#EBE6DD] shadow-2xs flex items-center justify-between shrink-0 mb-5">
+      <div className="bg-white p-5 rounded-2xl border border-zinc-200 shadow-2xs flex items-center justify-between shrink-0 mb-5">
         <div className="flex items-center gap-3.5">
           {onBack && (
-            <button onClick={onBack} className="p-2 hover:bg-zinc-100 rounded-lg transition-colors cursor-pointer text-[#1A1917]/70">
+            <button onClick={onBack} className="p-2 hover:bg-zinc-100 rounded-lg transition-colors cursor-pointer text-zinc-700">
               <ArrowLeft className="w-5 h-5" />
             </button>
           )}
-          <div className="p-2.5 bg-[#FAF6F0] rounded-xl border border-[#EBE6DD]">
-            <Database className="w-5 h-5 text-[#1A1917]/85" />
+          <div className="p-2.5 bg-zinc-50 rounded-xl border border-zinc-200">
+            <Database className="w-5 h-5 text-zinc-800" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-bold text-base text-[#1A1917] tracking-tight">
+              <h3 className="font-bold text-base text-zinc-900 tracking-tight">
                 Database & Backend Sync
               </h3>
-              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#EBE6DD]/60 text-[#1A1917]/70 uppercase tracking-wider border border-[#EBE6DD]">
+              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-zinc-100 text-zinc-700 uppercase tracking-wider border border-zinc-200">
                 Active Database
               </span>
             </div>
@@ -118,7 +118,7 @@ export const DatabaseView: React.FC<Props> = ({
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-1.5 p-1 bg-[#EBE6DD]/40 rounded-full border border-[#EBE6DD]/50 max-w-fit mb-5 overflow-x-auto">
+      <div className="flex gap-1.5 p-1 bg-zinc-100 rounded-full border border-zinc-200 max-w-fit mb-5 overflow-x-auto">
         {[
           { id: 'overview', label: 'Status', icon: Server },
           { id: 'mysql', label: 'MySQL Schema', icon: Database },
@@ -134,8 +134,8 @@ export const DatabaseView: React.FC<Props> = ({
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                 isActive
-                  ? 'bg-[#1A1917] text-white shadow-xs'
-                  : 'text-[#1A1917]/60 hover:text-zinc-900 hover:bg-[#EBE6DD]/20'
+                  ? 'bg-zinc-950 text-white shadow-xs'
+                  : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/50'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -145,7 +145,7 @@ export const DatabaseView: React.FC<Props> = ({
         })}
       </div>
 
-      <div className="bg-white p-6 rounded-2xl border border-[#EBE6DD] shadow-2xs overflow-y-auto space-y-6 flex-1 max-w-4xl">
+      <div className="bg-white p-6 rounded-2xl border border-zinc-200 shadow-2xs overflow-y-auto space-y-6 flex-1 max-w-4xl">
         {activeTab === 'overview' && (
           <div className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -217,35 +217,35 @@ export const DatabaseView: React.FC<Props> = ({
               <a
                 href="/api/database/schema-sql"
                 download="auracv_mysql_schema.sql"
-                className="p-5 rounded-3xl border-2 border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all flex items-center justify-between group cursor-pointer"
+                className="p-5 rounded-3xl border-2 border-zinc-100 hover:border-zinc-300 hover:bg-zinc-50 transition-all flex items-center justify-between group cursor-pointer"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-2xl bg-slate-100 group-hover:bg-indigo-100 flex items-center justify-center transition-colors">
-                    <Database className="w-5 h-5 text-slate-600 group-hover:text-indigo-600" />
+                  <div className="w-10 h-10 rounded-2xl bg-zinc-100 group-hover:bg-zinc-200 flex items-center justify-center transition-colors">
+                    <Database className="w-5 h-5 text-zinc-600 group-hover:text-zinc-900" />
                   </div>
                   <div>
-                    <h5 className="text-sm font-bold text-slate-900">MySQL Schema (.sql)</h5>
-                    <span className="text-xs text-slate-500">Download 13 relational tables</span>
+                    <h5 className="text-sm font-bold text-zinc-900">MySQL Schema (.sql)</h5>
+                    <span className="text-xs text-zinc-500">Download 13 relational tables</span>
                   </div>
                 </div>
-                <Download className="w-5 h-5 text-slate-300 group-hover:text-indigo-600" />
+                <Download className="w-5 h-5 text-zinc-300 group-hover:text-zinc-900" />
               </a>
 
               <button
                 type="button"
                 onClick={() => setActiveTab('laravel')}
-                className="p-5 rounded-3xl border-2 border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all flex items-center justify-between group cursor-pointer text-left"
+                className="p-5 rounded-3xl border-2 border-zinc-100 hover:border-zinc-300 hover:bg-zinc-50 transition-all flex items-center justify-between group cursor-pointer text-left"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-2xl bg-slate-100 group-hover:bg-indigo-100 flex items-center justify-center transition-colors">
-                    <FileCode className="w-5 h-5 text-slate-600 group-hover:text-indigo-600" />
+                  <div className="w-10 h-10 rounded-2xl bg-zinc-100 group-hover:bg-zinc-200 flex items-center justify-center transition-colors">
+                    <FileCode className="w-5 h-5 text-zinc-600 group-hover:text-zinc-900" />
                   </div>
                   <div>
-                    <h5 className="text-sm font-bold text-slate-900">Laravel Driver</h5>
-                    <span className="text-xs text-slate-500">Migrations, Models, API</span>
+                    <h5 className="text-sm font-bold text-zinc-900">Laravel Driver</h5>
+                    <span className="text-xs text-zinc-500">Migrations, Models, API</span>
                   </div>
                 </div>
-                <ExternalLink className="w-5 h-5 text-slate-300 group-hover:text-indigo-600" />
+                <ExternalLink className="w-5 h-5 text-zinc-300 group-hover:text-zinc-900" />
               </button>
             </div>
           </div>
@@ -253,12 +253,12 @@ export const DatabaseView: React.FC<Props> = ({
 
         {activeTab === 'api' && (
           <div className="space-y-6">
-            <div className="bg-indigo-50/50 rounded-3xl p-6 border-2 border-indigo-100/50">
-              <h4 className="text-base font-bold text-indigo-900 flex items-center gap-2">
-                <RefreshCw className={`w-5 h-5 ${isSyncing ? 'animate-spin' : ''}`} />
+            <div className="bg-emerald-50/60 rounded-3xl p-6 border border-emerald-200/80">
+              <h4 className="text-base font-bold text-emerald-950 flex items-center gap-2">
+                <RefreshCw className={`w-5 h-5 text-emerald-600 ${isSyncing ? 'animate-spin' : ''}`} />
                 Laravel Cloud Sync
               </h4>
-              <p className="text-sm text-indigo-800/70 mt-2">
+              <p className="text-sm text-emerald-800/80 mt-2">
                 Your resumes are automatically synced to the cloud using your Google account.
               </p>
             </div>

@@ -22,22 +22,22 @@ export const AccountView: React.FC<Props> = ({ onBack }) => {
   return (
     <div className="flex flex-col h-full bg-transparent">
       {/* Header Banner */}
-      <div className="bg-white p-5 rounded-2xl border border-[#EBE6DD] shadow-2xs flex items-center justify-between shrink-0 mb-5">
+      <div className="bg-white p-5 rounded-2xl border border-zinc-200 shadow-2xs flex items-center justify-between shrink-0 mb-5">
         <div className="flex items-center gap-3.5">
           {onBack && (
-            <button onClick={onBack} className="p-2 hover:bg-zinc-100 rounded-lg transition-colors cursor-pointer text-[#1A1917]/70">
+            <button onClick={onBack} className="p-2 hover:bg-zinc-100 rounded-lg transition-colors cursor-pointer text-zinc-700">
               <ArrowLeft className="w-5 h-5" />
             </button>
           )}
-          <div className="p-2.5 bg-[#FAF6F0] rounded-xl border border-[#EBE6DD]">
-            <UserIcon className="w-5 h-5 text-[#1A1917]/85" />
+          <div className="p-2.5 bg-zinc-50 rounded-xl border border-zinc-200">
+            <UserIcon className="w-5 h-5 text-zinc-800" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-bold text-base text-[#1A1917] tracking-tight">
+              <h3 className="font-bold text-base text-zinc-900 tracking-tight">
                 Your Account
               </h3>
-              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#EBE6DD]/60 text-[#1A1917]/70 uppercase tracking-wider border border-[#EBE6DD]">
+              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-zinc-100 text-zinc-700 uppercase tracking-wider border border-zinc-200">
                 Session
               </span>
             </div>
@@ -48,7 +48,7 @@ export const AccountView: React.FC<Props> = ({ onBack }) => {
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl border border-[#EBE6DD] shadow-2xs overflow-y-auto flex-1">
+      <div className="bg-white p-6 rounded-2xl border border-zinc-200 shadow-2xs overflow-y-auto flex-1">
         <div className="bg-slate-50 rounded-3xl p-8 border border-slate-200">
           <div className="flex items-center gap-6">
             <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-lg shrink-0">

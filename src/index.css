@@ -28,22 +28,6 @@ h1, h2, h3, h4, .font-display {
 
 /* Premium Utilities */
 @layer utilities {
-  .bg-cream-light {
-    background-color: #f4f4f5;
-  }
-  
-  .bg-cream-card {
-    background-color: #ffffff;
-  }
-  
-  .text-charcoal {
-    color: #18181b;
-  }
-  
-  .border-cream-soft {
-    border-color: #e4e4e7;
-  }
-
   .glass-surface {
     @apply bg-white/80 backdrop-blur-xl border border-zinc-200/80;
   }

@@ -172,7 +172,7 @@ export const FlowCompactTemplate: React.FC<Props> = ({ data }) => {
                     </span>
                   </div>
                   {proj.link && (
-                    <div className="text-[10px] text-indigo-600 truncate">{proj.link}</div>
+                    <div className="text-[10px] truncate" style={{ color: accent }}>{proj.link}</div>
                   )}
 
                   <ul className="mt-1 space-y-0.5 list-disc pl-4 text-slate-700 text-[11px]">

@@ -180,7 +180,7 @@ export const SplitSidebarTemplate: React.FC<Props> = ({ data }) => {
                       {exp.startDate} – {exp.isCurrent ? 'Present' : exp.endDate}
                     </span>
                   </div>
-                  <div className="text-indigo-600 font-semibold text-[11.5px]">
+                  <div className="font-semibold text-[11.5px]" style={{ color: accentColor }}>
                     {exp.company} {exp.location && `• ${exp.location}`}
                   </div>
                   <ul className="mt-1 space-y-1 list-disc list-outside ml-3.5 text-slate-700 leading-relaxed">
@@ -215,7 +215,7 @@ export const SplitSidebarTemplate: React.FC<Props> = ({ data }) => {
                     </span>
                   </div>
                   {proj.link && (
-                    <div className="text-indigo-600 text-[11px] font-mono">{proj.link}</div>
+                    <div className="text-[11px] font-mono" style={{ color: accentColor }}>{proj.link}</div>
                   )}
                   <ul className="mt-1 space-y-0.5 list-disc list-outside ml-3.5 text-slate-700 leading-relaxed">
                     {proj.descriptionBullets

@@ -72,7 +72,7 @@ export const PersonalForm: React.FC<Props> = ({ data, onChange }) => {
             value={data.fullName || ''}
             onChange={(e) => handleChange('fullName', e.target.value)}
             placeholder="e.g. Odubela Oluwatomiwa"
-            className="w-full px-4 py-2.5 text-sm bg-white border border-[#EBE6DD] rounded-xl focus:outline-hidden focus:ring-1 focus:ring-[#1A1917] focus:border-[#1A1917] text-[#1A1917] transition-all font-medium placeholder:text-zinc-400"
+            className="w-full px-4 py-2.5 text-sm bg-white border border-zinc-200 rounded-xl focus:outline-hidden focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 text-zinc-900 transition-all font-medium placeholder:text-zinc-400"
           />
         </div>
 
@@ -85,7 +85,7 @@ export const PersonalForm: React.FC<Props> = ({ data, onChange }) => {
             value={data.title || ''}
             onChange={(e) => handleChange('title', e.target.value)}
             placeholder="e.g. Backend Developer"
-            className="w-full px-4 py-2.5 text-sm bg-white border border-[#EBE6DD] rounded-xl focus:outline-hidden focus:ring-1 focus:ring-[#1A1917] focus:border-[#1A1917] text-[#1A1917] transition-all font-medium placeholder:text-zinc-400"
+            className="w-full px-4 py-2.5 text-sm bg-white border border-zinc-200 rounded-xl focus:outline-hidden focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 text-zinc-900 transition-all font-medium placeholder:text-zinc-400"
           />
         </div>
 
@@ -98,7 +98,7 @@ export const PersonalForm: React.FC<Props> = ({ data, onChange }) => {
             value={data.email || ''}
             onChange={(e) => handleChange('email', e.target.value)}
             placeholder="e.g. odubelaotomiwa508@gmail.com"
-            className="w-full px-4 py-2.5 text-sm bg-white border border-[#EBE6DD] rounded-xl focus:outline-hidden focus:ring-1 focus:ring-[#1A1917] focus:border-[#1A1917] text-[#1A1917] transition-all font-medium placeholder:text-zinc-400"
+            className="w-full px-4 py-2.5 text-sm bg-white border border-zinc-200 rounded-xl focus:outline-hidden focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 text-zinc-900 transition-all font-medium placeholder:text-zinc-400"
           />
         </div>
 
@@ -111,7 +111,7 @@ export const PersonalForm: React.FC<Props> = ({ data, onChange }) => {
             value={data.phone || ''}
             onChange={(e) => handleChange('phone', e.target.value)}
             placeholder="e.g. 09125808797"
-            className="w-full px-4 py-2.5 text-sm bg-white border border-[#EBE6DD] rounded-xl focus:outline-hidden focus:ring-1 focus:ring-[#1A1917] focus:border-[#1A1917] text-[#1A1917] transition-all font-medium placeholder:text-zinc-400"
+            className="w-full px-4 py-2.5 text-sm bg-white border border-zinc-200 rounded-xl focus:outline-hidden focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 text-zinc-900 transition-all font-medium placeholder:text-zinc-400"
           />
         </div>
 
@@ -124,7 +124,7 @@ export const PersonalForm: React.FC<Props> = ({ data, onChange }) => {
             value={data.location || ''}
             onChange={(e) => handleChange('location', e.target.value)}
             placeholder="e.g. Lagos, Nigeria / Remote"
-            className="w-full px-4 py-2.5 text-sm bg-white border border-[#EBE6DD] rounded-xl focus:outline-hidden focus:ring-1 focus:ring-[#1A1917] focus:border-[#1A1917] text-[#1A1917] transition-all font-medium placeholder:text-zinc-400"
+            className="w-full px-4 py-2.5 text-sm bg-white border border-zinc-200 rounded-xl focus:outline-hidden focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 text-zinc-900 transition-all font-medium placeholder:text-zinc-400"
           />
         </div>
 
@@ -137,7 +137,7 @@ export const PersonalForm: React.FC<Props> = ({ data, onChange }) => {
             value={data.portfolioUrl || ''}
             onChange={(e) => handleChange('portfolioUrl', e.target.value)}
             placeholder="e.g. blaconchain.github.io/Portfolio"
-            className="w-full px-4 py-2.5 text-sm bg-white border border-[#EBE6DD] rounded-xl focus:outline-hidden focus:ring-1 focus:ring-[#1A1917] focus:border-[#1A1917] text-[#1A1917] transition-all font-medium placeholder:text-zinc-400"
+            className="w-full px-4 py-2.5 text-sm bg-white border border-zinc-200 rounded-xl focus:outline-hidden focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 text-zinc-900 transition-all font-medium placeholder:text-zinc-400"
           />
         </div>
 
@@ -150,7 +150,7 @@ export const PersonalForm: React.FC<Props> = ({ data, onChange }) => {
             value={data.githubUrl || ''}
             onChange={(e) => handleChange('githubUrl', e.target.value)}
             placeholder="e.g. github.com/blaconchain"
-            className="w-full px-4 py-2.5 text-sm bg-white border border-[#EBE6DD] rounded-xl focus:outline-hidden focus:ring-1 focus:ring-[#1A1917] focus:border-[#1A1917] text-[#1A1917] transition-all font-medium placeholder:text-zinc-400"
+            className="w-full px-4 py-2.5 text-sm bg-white border border-zinc-200 rounded-xl focus:outline-hidden focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 text-zinc-900 transition-all font-medium placeholder:text-zinc-400"
           />
         </div>
 
@@ -163,7 +163,7 @@ export const PersonalForm: React.FC<Props> = ({ data, onChange }) => {
             value={data.twitterUrl || ''}
             onChange={(e) => handleChange('twitterUrl', e.target.value)}
             placeholder="e.g. @blac_onchain"
-            className="w-full px-4 py-2.5 text-sm bg-white border border-[#EBE6DD] rounded-xl focus:outline-hidden focus:ring-1 focus:ring-[#1A1917] focus:border-[#1A1917] text-[#1A1917] transition-all font-medium placeholder:text-zinc-400"
+            className="w-full px-4 py-2.5 text-sm bg-white border border-zinc-200 rounded-xl focus:outline-hidden focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 text-zinc-900 transition-all font-medium placeholder:text-zinc-400"
           />
         </div>
 
@@ -186,7 +186,7 @@ export const PersonalForm: React.FC<Props> = ({ data, onChange }) => {
             value={data.linkedinUrl || ''}
             onChange={(e) => handleChange('linkedinUrl', e.target.value)}
             placeholder="e.g. linkedin.com/in/odubela-oluwatomiwa"
-            className="w-full px-4 py-2.5 text-sm bg-white border border-[#EBE6DD] rounded-xl focus:outline-hidden focus:ring-1 focus:ring-[#1A1917] focus:border-[#1A1917] text-[#1A1917] transition-all font-medium placeholder:text-zinc-400"
+            className="w-full px-4 py-2.5 text-sm bg-white border border-zinc-200 rounded-xl focus:outline-hidden focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 text-zinc-900 transition-all font-medium placeholder:text-zinc-400"
           />
         </div>
       </div>

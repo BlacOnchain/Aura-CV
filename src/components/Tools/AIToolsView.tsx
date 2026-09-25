@@ -107,22 +107,22 @@ export const AIToolsView: React.FC<Props> = ({
   return (
     <div className="flex flex-col h-full bg-transparent">
       {/* Header Banner */}
-      <div className="bg-white p-5 rounded-2xl border border-[#EBE6DD] shadow-2xs flex items-center justify-between shrink-0 mb-5">
+      <div className="bg-white p-5 rounded-2xl border border-zinc-200 shadow-2xs flex items-center justify-between shrink-0 mb-5">
         <div className="flex items-center gap-3.5">
           {onBack && (
-            <button onClick={onBack} className="p-2 hover:bg-zinc-100 rounded-lg transition-colors cursor-pointer text-[#1A1917]/70">
+            <button onClick={onBack} className="p-2 hover:bg-zinc-100 rounded-lg transition-colors cursor-pointer text-zinc-700">
               <ArrowLeft className="w-5 h-5" />
             </button>
           )}
-          <div className="p-2.5 bg-[#FAF6F0] rounded-xl border border-[#EBE6DD]">
-            <Bot className="w-5 h-5 text-[#1A1917]/85" />
+          <div className="p-2.5 bg-zinc-50 rounded-xl border border-zinc-200">
+            <Bot className="w-5 h-5 text-zinc-800" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-bold text-base text-[#1A1917] tracking-tight">
+              <h3 className="font-bold text-base text-zinc-900 tracking-tight">
                 AI Writing Suite
               </h3>
-              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#EBE6DD]/60 text-[#1A1917]/70 uppercase tracking-wider border border-[#EBE6DD]">
+              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-zinc-100 text-zinc-700 uppercase tracking-wider border border-zinc-200">
                 Gemini AI
               </span>
             </div>
@@ -134,7 +134,7 @@ export const AIToolsView: React.FC<Props> = ({
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-1.5 p-1 bg-[#EBE6DD]/40 rounded-full border border-[#EBE6DD]/50 max-w-fit mb-5">
+      <div className="flex gap-1.5 p-1 bg-zinc-100 rounded-full border border-zinc-200 max-w-fit mb-5">
         {[
           { id: 'bullet', label: 'Bullet Improver', icon: Zap },
           { id: 'summary', label: 'Summary Builder', icon: Wand2 },
@@ -149,8 +149,8 @@ export const AIToolsView: React.FC<Props> = ({
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                 isActive
-                  ? 'bg-[#1A1917] text-white shadow-xs'
-                  : 'text-[#1A1917]/60 hover:text-zinc-900 hover:bg-[#EBE6DD]/20'
+                  ? 'bg-zinc-950 text-white shadow-xs'
+                  : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/50'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -174,7 +174,7 @@ export const AIToolsView: React.FC<Props> = ({
       )}
 
       {/* Content Body */}
-      <div className="bg-white p-6 rounded-2xl border border-[#EBE6DD] shadow-2xs overflow-y-auto space-y-6 flex-1 max-w-4xl">
+      <div className="bg-white p-6 rounded-2xl border border-zinc-200 shadow-2xs overflow-y-auto space-y-6 flex-1 max-w-4xl">
         {activeTab === 'bullet' && (
           <div className="space-y-6">
             <div>

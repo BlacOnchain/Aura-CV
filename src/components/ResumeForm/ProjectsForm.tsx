@@ -75,7 +75,7 @@ export const ProjectsForm: React.FC<Props> = ({ projects = [], onChange }) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between pb-3 border-b border-[#EBE6DD]/60">
+      <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
         <div>
           <p className="text-xs text-zinc-500">
             Key software projects, open-source repositories, academic tools, or live apps
@@ -85,7 +85,7 @@ export const ProjectsForm: React.FC<Props> = ({ projects = [], onChange }) => {
         <button
           type="button"
           onClick={handleAddProject}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#1A1917] bg-[#EBE6DD]/60 hover:bg-[#EBE6DD] rounded-lg transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-900 bg-zinc-100 hover:bg-zinc-200 rounded-lg transition-colors cursor-pointer border border-zinc-200"
         >
           <Plus className="w-4 h-4" />
           Add Project
@@ -93,14 +93,14 @@ export const ProjectsForm: React.FC<Props> = ({ projects = [], onChange }) => {
       </div>
 
       {projects.length === 0 && (
-        <div className="text-center py-8 px-4 border border-dashed border-[#EBE6DD] rounded-2xl bg-transparent">
+        <div className="text-center py-8 px-4 border border-dashed border-zinc-200 rounded-2xl bg-transparent">
           <FolderGit2 className="w-8 h-8 text-zinc-400 mx-auto mb-2" />
           <p className="text-sm font-medium text-slate-700">No projects added yet</p>
           <p className="text-xs text-slate-500 mt-1 mb-4">Showcase personal, client, or academic software projects</p>
           <button
             type="button"
             onClick={handleAddProject}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#1A1917] hover:bg-zinc-800 rounded-lg shadow-xs cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg shadow-xs cursor-pointer"
           >
             <Plus className="w-4 h-4" /> Add Project
           </button>
@@ -111,10 +111,10 @@ export const ProjectsForm: React.FC<Props> = ({ projects = [], onChange }) => {
         {projects.map((proj, index) => (
           <div
             key={proj.id}
-            className="pb-8 border-b border-[#EBE6DD]/60 last:border-0 last:pb-0 relative space-y-4"
+            className="pb-8 border-b border-zinc-200/80 last:border-0 last:pb-0 relative space-y-4"
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 bg-[#EBE6DD]/30 px-2 py-0.5 rounded-md border border-[#EBE6DD]/60">
+              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 bg-zinc-100 px-2 py-0.5 rounded-md border border-zinc-200">
                 Project #{index + 1}
               </span>
               <div className="flex items-center gap-1">

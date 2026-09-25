@@ -225,7 +225,7 @@ export const FlowCreativeTemplate: React.FC<Props> = ({ data }) => {
                     <span>{proj.name} {proj.subtitle && <span className="font-normal text-slate-500 text-xs">({proj.subtitle})</span>}</span>
                     <span className="text-[11px] font-medium text-slate-500">{proj.startDate} {proj.endDate ? `- ${proj.endDate}` : ''}</span>
                   </div>
-                  {proj.link && <p className="text-[11px] text-indigo-600 truncate">{proj.link}</p>}
+                  {proj.link && <p className="text-[11px] truncate" style={{ color: accent }}>{proj.link}</p>}
                   <ul className="space-y-1 pt-1">
                     {proj.descriptionBullets.filter(Boolean).map((b, idx) => (
                       <li key={idx} className="text-xs text-slate-700 flex items-start gap-2 leading-relaxed">
