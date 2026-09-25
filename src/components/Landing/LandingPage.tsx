@@ -4,15 +4,12 @@ import {
   Target, 
   ArrowRight, 
   FileText, 
-  Zap, 
   CheckCircle2, 
   ExternalLink,
   ShieldCheck
 } from 'lucide-react';
 import { HeroStudioDiagram } from './HeroStudioDiagram';
-import { ATSScannerDiagram } from './ATSScannerDiagram';
-import { BulletNarrativeEngine } from './BulletNarrativeEngine';
-import { WorkflowDiagram } from './WorkflowDiagram';
+import { InteractiveMotionPreview } from './InteractiveMotionPreview';
 import { PrivacyPolicyModal } from '../Legal/PrivacyPolicyModal';
 import { TermsModal } from '../Legal/TermsModal';
 import { CookieConsentBanner } from '../Legal/CookieConsentBanner';
@@ -48,11 +45,10 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
         </div>
         
         {/* Desktop Links */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-xs font-semibold text-zinc-500">
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-xs font-medium text-zinc-500">
           <a href="#hero" className="hover:text-zinc-900 transition-colors">Overview</a>
-          <a href="#pipeline" className="hover:text-zinc-900 transition-colors">How It Works</a>
-          <a href="#scanner-demo" className="hover:text-zinc-900 transition-colors">ATS Simulator</a>
-          <a href="#bullet-engine" className="hover:text-zinc-900 transition-colors">Bullet Enhancer</a>
+          <a href="#demo" className="hover:text-zinc-900 transition-colors">Interactive Demo</a>
+          <a href="#pipeline" className="hover:text-zinc-900 transition-colors">Workflow</a>
         </nav>
 
         {/* Action Buttons with 44x44px Minimum Touch Targets */}
@@ -151,156 +147,63 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
         </div>
       </section>
 
-      {/* 4-STAGE PIPELINE SECTION */}
-      <section id="pipeline" className="py-14 sm:py-20 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto overflow-hidden">
-        <WorkflowDiagram />
+      {/* INTERACTIVE MOTION STUDIO PLAYGROUND */}
+      <section id="demo" className="py-10 sm:py-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto overflow-hidden">
+        <InteractiveMotionPreview onStartStudio={() => onStart('register')} />
       </section>
 
-      {/* LIVE ATS SCANNER SIMULATOR SECTION */}
-      <section id="scanner-demo" className="py-14 sm:py-20 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto space-y-6 sm:space-y-8 overflow-hidden">
-        <div className="max-w-2xl mx-auto text-center space-y-2 sm:space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 text-zinc-700 text-xs font-semibold">
-            <Target className="w-3.5 h-3.5 text-zinc-900 shrink-0" />
-            <span>Recruiter ATS Simulation</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display text-zinc-900 font-bold break-words">
-            Simulate Recruiter Filters Before Applying
-          </h2>
-          <p className="text-zinc-500 text-xs sm:text-sm md:text-base leading-relaxed break-words">
-            Audit your resume keywords, section syntax, and parse scores in real-time.
-          </p>
-        </div>
-
-        {/* ATS Diagram */}
-        <ATSScannerDiagram />
-      </section>
-
-      {/* AI BULLET NARRATIVE ENHANCER SECTION */}
-      <section id="bullet-engine" className="py-14 sm:py-20 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto space-y-6 sm:space-y-8 overflow-hidden">
-        <div className="max-w-2xl mx-auto text-center space-y-2 sm:space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 text-zinc-700 text-xs font-semibold">
-            <Zap className="w-3.5 h-3.5 text-zinc-900 shrink-0" />
-            <span>Executive Bullet Rewriter</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display text-zinc-900 font-bold break-words">
-            Elevate Tasks Into Measurable Achievements
-          </h2>
-          <p className="text-zinc-500 text-xs sm:text-sm md:text-base leading-relaxed break-words">
-            Apply the proven Google XYZ formula: Accomplished [X], measured by [Y], by doing [Z].
-          </p>
-        </div>
-
-        {/* Bullet Engine Component */}
-        <BulletNarrativeEngine />
-      </section>
-
-      {/* CORE FEATURES (CLEAR IMAGES & SUCCINCT COPY) */}
-      <section className="py-14 sm:py-20 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto space-y-8 sm:space-y-10 overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 pb-4 border-b border-zinc-200">
+      {/* 3-STEP ESSENTIAL ARCHITECTURE PIPELINE */}
+      <section id="pipeline" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto space-y-8 overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4 border-b border-zinc-200">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">Complete Career Suite</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display text-zinc-900 font-bold mt-1 break-words">
-              Engineered For Career Readiness
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400">Streamlined Workflow</span>
+            <h2 className="text-2xl sm:text-3xl font-display text-zinc-900 font-bold mt-1">
+              Engineered For Interview Readiness
             </h2>
           </div>
-          <p className="text-zinc-500 text-xs sm:text-sm max-w-xs break-words">
-            Purpose-built tools to eliminate guesswork and maximize interview callbacks.
+          <p className="text-zinc-500 text-xs sm:text-sm max-w-xs">
+            Three precision steps to transform your career history into an executive presentation.
           </p>
         </div>
 
-        {/* 3 Prominent Feature Cards with Optimized Images and Alt Text */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
-          {/* Card 1: AI Bullet Polish */}
-          <div className="bg-white rounded-2xl sm:rounded-3xl border border-zinc-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
-            <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden bg-zinc-100">
-              <img 
-                src="/src/assets/images/resume_bullet_editor_1790341257964.jpg" 
-                alt="AI Resume bullet editor showing impact metrics and Google XYZ formula suggestions"
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center"
-              />
-              <div className="absolute top-3 left-3 bg-white/95 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-zinc-800 shadow-xs border border-zinc-200">
-                AI Bullet Polish
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Step 1 */}
+          <div className="bg-white p-6 sm:p-7 rounded-2xl border border-zinc-200 shadow-xs space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-900 font-bold text-sm">
+              01
             </div>
-            <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between space-y-3">
-              <div>
-                <h3 className="text-base sm:text-lg lg:text-xl font-display font-bold text-zinc-900 break-words">
-                  Precision Narrative Writing
-                </h3>
-                <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed mt-1.5 break-words">
-                  Generate strong action verbs, eliminate passive wording, and quantify daily accomplishments.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-600 font-medium">
-                <span>4.2x Impact Increase</span>
-                <span className="text-zinc-400 font-mono text-[11px]">XYZ Formula</span>
-              </div>
-            </div>
+            <h3 className="text-base sm:text-lg font-display font-bold text-zinc-900">
+              Draft & Quantify
+            </h3>
+            <p className="text-xs sm:text-sm text-zinc-500 leading-relaxed">
+              Input experience details and auto-format action points using Google XYZ metrics.
+            </p>
           </div>
 
-          {/* Card 2: ATS Scanner */}
-          <div className="bg-white rounded-2xl sm:rounded-3xl border border-zinc-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
-            <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden bg-zinc-100">
-              <img 
-                src="/src/assets/images/ats_recruiter_scanner_1790341245736.jpg" 
-                alt="Recruiter workstation reviewing candidates with automated keyword match scoring"
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center"
-              />
-              <div className="absolute top-3 left-3 bg-white/95 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-zinc-800 shadow-xs border border-zinc-200">
-                Recruiter ATS Audit
-              </div>
+          {/* Step 2 */}
+          <div className="bg-white p-6 sm:p-7 rounded-2xl border border-zinc-200 shadow-xs space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-900 font-bold text-sm">
+              02
             </div>
-            <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between space-y-3">
-              <div>
-                <h3 className="text-base sm:text-lg lg:text-xl font-display font-bold text-zinc-900 break-words">
-                  ATS Recruiter Matcher
-                </h3>
-                <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed mt-1.5 break-words">
-                  Scan candidate profiles against job requirements to spot missing skills and formatting errors.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-600 font-medium">
-                <span>99.2% Parse Reliability</span>
-                <span className="text-zinc-400 font-mono text-[11px]">Workday Ready</span>
-              </div>
-            </div>
+            <h3 className="text-base sm:text-lg font-display font-bold text-zinc-900">
+              ATS Recruiter Audit
+            </h3>
+            <p className="text-xs sm:text-sm text-zinc-500 leading-relaxed">
+              Verify keyword density, target role matches, and formatting against Workday & Greenhouse parsers.
+            </p>
           </div>
 
-          {/* Card 3: Matched Application Suite */}
-          <div className="bg-white rounded-2xl sm:rounded-3xl border border-zinc-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col sm:col-span-2 lg:col-span-1">
-            <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden bg-zinc-100">
-              <img 
-                src="/src/assets/images/portfolio_coverletter_package_1790341270829.jpg" 
-                alt="Cohesive job application package showing matching resume and cover letter documents"
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center"
-              />
-              <div className="absolute top-3 left-3 bg-white/95 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-zinc-800 shadow-xs border border-zinc-200">
-                Application Suite
-              </div>
+          {/* Step 3 */}
+          <div className="bg-white p-6 sm:p-7 rounded-2xl border border-zinc-200 shadow-xs space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-900 font-bold text-sm">
+              03
             </div>
-            <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between space-y-3">
-              <div>
-                <h3 className="text-base sm:text-lg lg:text-xl font-display font-bold text-zinc-900 break-words">
-                  Matched Cover Letter & Suite
-                </h3>
-                <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed mt-1.5 break-words">
-                  Export consistent styling across your resume and cover letter in print-ready A4 PDF format.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-600 font-medium">
-                <span>One-Click Multi-Format</span>
-                <span className="text-zinc-400 font-mono text-[11px]">PDF & Plaintext</span>
-              </div>
-            </div>
+            <h3 className="text-base sm:text-lg font-display font-bold text-zinc-900">
+              Export & Apply
+            </h3>
+            <p className="text-xs sm:text-sm text-zinc-500 leading-relaxed">
+              Download clean A4 PDFs and matched cover letters formatted for immediate recruiter review.
+            </p>
           </div>
         </div>
       </section>
@@ -360,9 +263,9 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
 
           {/* Links & Portfolio Button (Touch Friendly >= 44x44px) */}
           <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs text-zinc-600">
-            <a href="#pipeline" className="hover:text-zinc-900 transition-colors py-2">How It Works</a>
-            <a href="#scanner-demo" className="hover:text-zinc-900 transition-colors py-2">ATS Simulator</a>
-            <a href="#bullet-engine" className="hover:text-zinc-900 transition-colors py-2">Bullet Enhancer</a>
+            <a href="#hero" className="hover:text-zinc-900 transition-colors py-2">Overview</a>
+            <a href="#demo" className="hover:text-zinc-900 transition-colors py-2">Interactive Demo</a>
+            <a href="#pipeline" className="hover:text-zinc-900 transition-colors py-2">Workflow</a>
 
             {/* Creator Portfolio Button */}
             <a 
