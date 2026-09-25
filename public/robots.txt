@@ -1,0 +1,12 @@
+# robots.txt for AuraCV Studio
+User-agent: *
+Allow: /
+Allow: /#hero
+Allow: /#pipeline
+Allow: /#scanner-demo
+Allow: /#bullet-engine
+
+# Disallow transient API routes from search indexing
+Disallow: /api/
+
+Sitemap: /sitemap.xml

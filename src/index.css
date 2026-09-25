@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+:root {
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  @apply bg-[#FAF6F0] text-[#1A1917];
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Fraunces', serif;
+  @apply font-semibold text-[#1A1917];
+}
+
+.font-body {
+  font-family: 'Outfit', sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Premium Utilities */
+@layer utilities {
+  .bg-cream-light {
+    background-color: #FAF6F0;
+  }
+  
+  .bg-cream-card {
+    background-color: #FCF9F5;
+  }
+  
+  .text-charcoal {
+    color: #1A1917;
+  }
+  
+  .border-cream-soft {
+    border-color: #EBE6DD;
+  }
+
+  .glass-surface {
+    @apply bg-white/70 backdrop-blur-xl border border-black/5;
+  }
+  
+  .aura-soft {
+    @apply absolute blur-[120px] rounded-full bg-zinc-200/50 pointer-events-none;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 10mm 12mm;
+    }
+
+    body {
+      background: white !important;
+      color: black !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .no-print {
+      display: none !important;
+    }
+
+    #printable-resume {
+      box-shadow: none !important;
+      border: none !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Prevent awkward cuts inside job or project blocks */
+    section, .resume-sheet section > div > div, .group {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  }
+}
+
+/* Premium Animations Keyframes */
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes paperLanding {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px) scale(1.02);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes floatBlobOne {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -40px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+}
+
+@keyframes floatBlobTwo {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1.05);
+  }
+  50% {
+    transform: translate(-35px, 30px) scale(0.9);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.animate-stagger-fade-in {
+  animation: staggerFadeIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-paper-landing {
+  animation: paperLanding 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float-blob-1 {
+  animation: floatBlobOne 14s ease-in-out infinite;
+}
+
+.animate-float-blob-2 {
+  animation: floatBlobTwo 18s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 8s ease-in-out infinite;
+}

@@ -1,0 +1,7 @@
+{
+  "name": "AuraCV Studio — Precision Resume Builder & ATS Job Studio",
+  "description": "Precision resume engineering with live A4 page budget meter, ATS keyword optimizer, multi-palette designer styling, and LinkedIn/PDF import.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
