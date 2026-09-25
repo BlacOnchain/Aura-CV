@@ -125,7 +125,7 @@ export const Navbar: React.FC<Props> = ({
 
         <div className="hidden md:flex items-center gap-1 p-1 bg-zinc-50 rounded-lg border border-zinc-100">
           {navTabs.map((tab) => {
-            const Icon = tab.icon;
+            const Icon = tab.icon as React.ComponentType<{ className?: string }>;
             const isActive = activeTab === tab.id;
             return (
               <button

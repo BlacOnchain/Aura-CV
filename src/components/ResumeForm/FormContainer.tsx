@@ -169,7 +169,7 @@ export const FormContainer: React.FC<Props> = ({ data, onChange }) => {
       {/* Accordion Form Stack */}
       <div className="flex-1 space-y-4.5 pb-24">
         {sections.map((sec, idx) => {
-          const Icon = sec.icon;
+          const Icon = sec.icon as React.ComponentType<{ className?: string }>;
           const isExpanded = expandedSection === sec.key;
 
           return (

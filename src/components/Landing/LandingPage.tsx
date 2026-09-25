@@ -8,7 +8,7 @@ import {
   ExternalLink,
   ShieldCheck
 } from 'lucide-react';
-import { HeroStudioDiagram } from './HeroStudioDiagram';
+import { ThreeResumeScene } from './ThreeResumeScene';
 import { InteractiveMotionPreview } from './InteractiveMotionPreview';
 import { PrivacyPolicyModal } from '../Legal/PrivacyPolicyModal';
 import { TermsModal } from '../Legal/TermsModal';
@@ -134,14 +134,14 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
             </div>
           </motion.div>
 
-          {/* Right Column: Hero Studio Diagram */}
+          {/* Right Column: Interactive 3D WebGL Motion Canvas */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.15 }}
             className="lg:col-span-6 w-full max-w-full overflow-hidden"
           >
-            <HeroStudioDiagram />
+            <ThreeResumeScene />
           </motion.div>
 
         </div>
