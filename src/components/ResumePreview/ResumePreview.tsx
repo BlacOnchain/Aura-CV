@@ -59,20 +59,21 @@ export const ResumePreview: React.FC<Props> = ({
   useEffect(() => {
     const handleResize = () => {
       if (viewportRef.current) {
-        const parentWidth = viewportRef.current.clientWidth - 48; // subtract padding
-        if (parentWidth < 820) {
-          // Keep a minimum scale of 0.85 on desktop/tablet to maintain comfortable reading size, and 0.5 on mobile
-          const minLimit = window.innerWidth < 640 ? 0.5 : 0.85;
-          setAutoScale(Math.max(minLimit, parentWidth / 820));
-        } else {
-          setAutoScale(1);
-        }
+        // Calculate exact horizontal padding available
+        const padding = window.innerWidth < 640 ? 16 : 48;
+        const parentWidth = Math.max(280, viewportRef.current.clientWidth - padding);
+        const fitScale = parentWidth / 820;
+        
+        // Mobile limit down to 0.38, Desktop scale up to 1.05
+        const minLimit = window.innerWidth < 640 ? 0.38 : 0.65;
+        const boundedScale = Math.min(1.05, Math.max(minLimit, fitScale));
+        setAutoScale(boundedScale);
       }
     };
 
     handleResize();
     window.addEventListener('resize', handleResize);
-    const timer = setTimeout(handleResize, 150);
+    const timer = setTimeout(handleResize, 100);
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -181,28 +182,23 @@ export const ResumePreview: React.FC<Props> = ({
       {/* Sheet Canvas Viewport */}
       <div
         ref={viewportRef}
-        className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center pb-24"
+        className="flex-1 overflow-auto p-3 sm:p-6 lg:p-8 flex flex-col items-center justify-start pb-28 scroll-smooth"
       >
-        {/* Page Container */}
+        {/* Page Container Wrapper */}
         <div
           style={{
             width: `${820 * finalScale}px`,
-            height: `${(contentHeight + 20) * finalScale}px`,
-            overflow: 'visible',
+            minHeight: `${(contentHeight + 20) * finalScale}px`,
           }}
-          className="relative transition-all duration-150"
+          className="relative flex justify-center items-start transition-all duration-200 shrink-0 my-auto"
         >
           <div
             style={{
               transform: `scale(${finalScale})`,
               transformOrigin: 'top center',
               width: '820px',
-              position: 'absolute',
-              top: 0,
-              left: '50%',
-              marginLeft: '-410px',
             }}
-            className="transition-transform duration-150"
+            className="transition-transform duration-200 shrink-0 shadow-xl rounded-xs"
           >
             {/* Main Paper Sheet */}
             <div
@@ -325,18 +321,27 @@ export const ResumePreview: React.FC<Props> = ({
         <div className="flex items-center gap-1.5 bg-[#EBE6DD]/30 px-1.5 py-0.5 rounded-full border border-[#EBE6DD]/40">
           <button
             type="button"
-            onClick={() => setZoomLevel((z) => Math.max(50, z - 10))}
-            disabled={zoomLevel <= 50}
+            onClick={() => setZoomLevel((z) => Math.max(40, z - 10))}
+            disabled={zoomLevel <= 40}
             className="w-6 h-6 flex items-center justify-center rounded-full text-[#1A1917]/60 hover:bg-[#EBE6DD]/60 hover:text-[#1A1917] disabled:opacity-30 cursor-pointer font-bold text-sm transition-colors"
+            title="Zoom Out"
           >
             -
           </button>
-          <span className="min-w-[34px] text-center text-[11px] font-bold">{zoomLevel}%</span>
           <button
             type="button"
-            onClick={() => setZoomLevel((z) => Math.min(130, z + 10))}
-            disabled={zoomLevel >= 130}
+            onClick={() => setZoomLevel(100)}
+            className="min-w-[34px] text-center text-[11px] font-bold text-[#1A1917]/80 hover:text-[#1A1917] cursor-pointer"
+            title="Reset Zoom to 100%"
+          >
+            {zoomLevel}%
+          </button>
+          <button
+            type="button"
+            onClick={() => setZoomLevel((z) => Math.min(140, z + 10))}
+            disabled={zoomLevel >= 140}
             className="w-6 h-6 flex items-center justify-center rounded-full text-[#1A1917]/60 hover:bg-[#EBE6DD]/60 hover:text-[#1A1917] disabled:opacity-30 cursor-pointer font-bold text-sm transition-colors"
+            title="Zoom In"
           >
             +
           </button>

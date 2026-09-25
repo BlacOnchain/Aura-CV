@@ -318,10 +318,10 @@ export default function App() {
                     animate={{ opacity: 1, y: 0 }} 
                     exit={{ opacity: 0, y: -10 }} 
                     transition={{ duration: 0.3 }}
-                    className="h-full px-4 pt-8"
+                    className="h-full px-4 sm:px-6 pt-6"
                   >
                     {activeTool ? (
-                       <div className="h-full">
+                       <div className="h-full max-w-4xl mx-auto w-full pb-24">
                          {activeTool === 'ai-tools' && <AIToolsView resumeData={resumeData} onUpdateResume={setResumeData} onOpenATS={() => setActiveTool('ats-scanner')} onOpenCoverLetter={() => setActiveTool('cover-letter')} onBack={() => setActiveTool(null)} />}
                          {activeTool === 'ats-scanner' && <ATSScannerView resumeData={resumeData} onBack={() => setActiveTool(null)} />}
                          {activeTool === 'cover-letter' && <CoverLetterView resumeData={resumeData} onBack={() => setActiveTool(null)} />}
