@@ -9,6 +9,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { MinimalStudioHeroCard } from './MinimalStudioHeroCard';
+import { ScrollMotionShowcase } from './ScrollMotionShowcase';
 import { InteractiveMotionPreview } from './InteractiveMotionPreview';
 import { PrivacyPolicyModal } from '../Legal/PrivacyPolicyModal';
 import { TermsModal } from '../Legal/TermsModal';
@@ -126,6 +127,11 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
         </div>
       </section>
 
+      {/* Scroll-Triggered Motion Pipeline Showcase */}
+      <section className="px-4 sm:px-6 lg:px-12 max-w-6xl mx-auto">
+        <ScrollMotionShowcase onStartStudio={() => onStart('register')} />
+      </section>
+
       {/* Interactive Studio Playground Demo */}
       <section id="demo" className="py-10 sm:py-14 px-4 sm:px-6 lg:px-12 max-w-6xl mx-auto">
         <InteractiveMotionPreview onStartStudio={() => onStart('register')} />
@@ -210,18 +216,6 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
               <FileText className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="font-display font-bold text-zinc-900 text-sm">AuraCV Studio</span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <a 
-              href="https://blaconchain.github.io/Portfolio/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="px-3 py-1.5 bg-zinc-950 hover:bg-zinc-800 text-white rounded-lg text-xs font-semibold transition-all inline-flex items-center gap-1.5"
-            >
-              <span>Creator Portfolio</span>
-              <ExternalLink className="w-3 h-3 text-zinc-400" />
-            </a>
           </div>
 
           <div className="flex items-center gap-3 text-[11px]">

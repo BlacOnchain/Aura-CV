@@ -267,12 +267,11 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF6F0] flex flex-col font-body text-[#1A1917] selection:bg-zinc-900 selection:text-white overflow-hidden relative">
+    <div className="min-h-screen bg-zinc-50 flex flex-col font-body text-zinc-900 selection:bg-zinc-900 selection:text-white overflow-hidden relative">
       {/* Dynamic Ambient Background Blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 no-print">
-        <div className="absolute top-[20%] left-[10%] w-[450px] h-[450px] rounded-full bg-[#EBE6DD]/25 blur-[120px] animate-float-blob-1" />
-        <div className="absolute bottom-[30%] right-[15%] w-[500px] h-[500px] rounded-full bg-[#D6CFBC]/20 blur-[130px] animate-float-blob-2" />
-        <div className="absolute top-[50%] left-[45%] w-[350px] h-[350px] rounded-full bg-orange-100/10 blur-[100px] animate-pulse-glow" />
+        <div className="absolute top-[20%] left-[10%] w-[450px] h-[450px] rounded-full bg-zinc-200/20 blur-[120px]" />
+        <div className="absolute bottom-[30%] right-[15%] w-[500px] h-[500px] rounded-full bg-emerald-500/5 blur-[130px]" />
       </div>
 
       <AnimatePresence mode="wait">
@@ -310,7 +309,7 @@ export default function App() {
             />
             <main className="flex-1 flex relative overflow-hidden">
               <UtilityRail activeTool={activeTool} onSelectTool={setActiveTool} />
-              <div className={`h-full overflow-y-auto border-r border-[#EBE6DD] bg-[#FAF6F0] transition-all duration-500 scroll-smooth ${viewMode === 'edit' ? 'flex-1' : viewMode === 'preview' ? 'hidden' : 'flex-1 lg:flex-none lg:w-1/2'}`}>
+              <div className={`h-full overflow-y-auto border-r border-zinc-200 bg-zinc-50 transition-all duration-500 scroll-smooth ${viewMode === 'edit' ? 'flex-1' : viewMode === 'preview' ? 'hidden' : 'flex-1 lg:flex-none lg:w-1/2'}`}>
                 <AnimatePresence mode="wait">
                   <motion.div 
                     key={activeTool || editorTab} 
@@ -344,7 +343,7 @@ export default function App() {
                   </motion.div>
                 </AnimatePresence>
               </div>
-              <div className={`h-full overflow-hidden bg-[#F7F2E8] transition-all duration-500 ${viewMode === 'preview' ? 'flex-1' : viewMode === 'edit' ? 'hidden' : 'hidden lg:block lg:flex-1'}`}>
+              <div className={`h-full overflow-hidden bg-zinc-100/90 transition-all duration-500 ${viewMode === 'preview' ? 'flex-1' : viewMode === 'edit' ? 'hidden' : 'hidden lg:block lg:flex-1'}`}>
                 <ResumePreview
                   data={resumeData}
                   onOpenATS={() => setActiveTool('ats-scanner')}

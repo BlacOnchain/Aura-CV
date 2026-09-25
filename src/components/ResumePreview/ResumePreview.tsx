@@ -57,29 +57,54 @@ export const ResumePreview: React.FC<Props> = ({
   const [autoScale, setAutoScale] = useState<number>(1);
 
   useEffect(() => {
-    const handleResize = () => {
+    const updateScale = () => {
       if (viewportRef.current) {
-        // Calculate exact horizontal padding available
-        const padding = window.innerWidth < 640 ? 16 : 48;
-        const parentWidth = Math.max(280, viewportRef.current.clientWidth - padding);
-        const fitScale = parentWidth / 820;
-        
-        // Mobile limit down to 0.38, Desktop scale up to 1.05
-        const minLimit = window.innerWidth < 640 ? 0.38 : 0.65;
-        const boundedScale = Math.min(1.05, Math.max(minLimit, fitScale));
+        const containerWidth = viewportRef.current.clientWidth;
+        const containerHeight = viewportRef.current.clientHeight;
+
+        const isMobile = window.innerWidth < 640;
+        const paddingX = isMobile ? 16 : 48;
+        const paddingY = isMobile ? 24 : 48;
+
+        const availW = Math.max(180, containerWidth - paddingX);
+        const availH = Math.max(250, containerHeight - paddingY);
+
+        const widthScale = availW / 820;
+        // Calculate height-based scale if height is constrained
+        const pageHeight = contentHeight || A4_HEIGHT_PX;
+        const heightScale = availH / pageHeight;
+
+        // On mobile or height-constrained views, pick proportional fit
+        let fitScale = widthScale;
+        if (isMobile || containerHeight < 600) {
+          fitScale = Math.min(widthScale, heightScale * 1.05);
+        }
+
+        const minFloor = isMobile ? 0.3 : 0.45;
+        const boundedScale = Math.min(1.1, Math.max(minFloor, fitScale));
         setAutoScale(boundedScale);
       }
     };
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    const timer = setTimeout(handleResize, 100);
+    updateScale();
+
+    let resizeObserver: ResizeObserver | null = null;
+    if (viewportRef.current && typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(() => {
+        updateScale();
+      });
+      resizeObserver.observe(viewportRef.current);
+    }
+
+    window.addEventListener('resize', updateScale);
+    const timer = setTimeout(updateScale, 150);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', updateScale);
+      if (resizeObserver) resizeObserver.disconnect();
       clearTimeout(timer);
     };
-  }, []);
+  }, [contentHeight]);
 
   // Approximate standard A4 height in 96 DPI CSS pixels (approx 1123px)
   const A4_HEIGHT_PX = 1123;
@@ -178,24 +203,24 @@ export const ResumePreview: React.FC<Props> = ({
   const finalScale = (zoomLevel / 100) * autoScale;
 
   return (
-    <div className="flex flex-col h-full bg-[#F7F2E8] overflow-hidden relative">
+    <div className="flex flex-col h-full bg-zinc-100/90 overflow-hidden relative">
       {/* Sheet Canvas Viewport */}
       <div
         ref={viewportRef}
-        className="flex-1 overflow-auto p-3 sm:p-6 lg:p-8 flex flex-col items-center justify-start pb-28 scroll-smooth"
+        className="flex-1 overflow-auto p-3 sm:p-6 lg:p-8 flex items-center justify-center pb-28 scroll-smooth min-h-0"
       >
-        {/* Page Container Wrapper */}
+        {/* Page Container Wrapper - Always Centered */}
         <div
           style={{
             width: `${820 * finalScale}px`,
             minHeight: `${(contentHeight + 20) * finalScale}px`,
           }}
-          className="relative flex justify-center items-start transition-all duration-200 shrink-0 my-auto"
+          className="relative flex flex-col justify-center items-center transition-all duration-200 shrink-0 my-auto mx-auto"
         >
           <div
             style={{
               transform: `scale(${finalScale})`,
-              transformOrigin: 'top center',
+              transformOrigin: 'center center',
               width: '820px',
             }}
             className="transition-transform duration-200 shrink-0 shadow-xl rounded-xs"
@@ -206,7 +231,7 @@ export const ResumePreview: React.FC<Props> = ({
               ref={resumeContainerRef}
               id="printable-resume"
               className={`w-full bg-white rounded-xs shadow-md transition-all relative overflow-hidden print:shadow-none print:m-0 print:p-0 print:w-full print:max-w-none animate-paper-landing ${
-                pageViewMode === 'paged' ? 'border border-[#EBE6DD] ring-1 ring-black/5' : ''
+                pageViewMode === 'paged' ? 'border border-zinc-200 ring-1 ring-black/5' : ''
               }`}
               style={{
                 minHeight: `${A4_HEIGHT_PX}px`,
@@ -214,7 +239,7 @@ export const ResumePreview: React.FC<Props> = ({
             >
             {renderTemplate()}
 
-            {/* Visual Page Break Indicator Line (FlowCV Style) in Paged Mode */}
+            {/* Visual Page Break Indicator Line in Paged Mode */}
             {pageViewMode === 'paged' && estimatedPages > 1 && (
               <>
                 {Array.from({ length: estimatedPages - 1 }).map((_, pIdx) => {
@@ -240,7 +265,7 @@ export const ResumePreview: React.FC<Props> = ({
 
           {/* Page Indicators Footer */}
           {pageViewMode === 'paged' && (
-            <div className="no-print mt-3.5 flex items-center justify-between text-xs text-zinc-500 px-2">
+            <div className="no-print mt-3.5 flex items-center justify-between text-xs text-zinc-500 px-2 w-full">
               <span className="flex items-center gap-1.5 font-medium">
                 <FileSpreadsheet className="w-3.5 h-3.5 text-zinc-400" />
                 Standard A4 Page Ratio ({estimatedPages} {estimatedPages === 1 ? 'Page' : 'Pages'})
@@ -256,25 +281,22 @@ export const ResumePreview: React.FC<Props> = ({
       </div>
 
       {/* Floating Bottom Control Capsule Bar */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 no-print bg-[#FCF9F5]/95 backdrop-blur-md border border-[#EBE6DD] rounded-3xl px-4.5 py-2.5 flex items-center gap-5 shadow-lg z-30 text-xs text-[#1A1917]">
-        {/* Real-Time Page Budget Meter (Recreation of pasted image layout) */}
-        <div className="flex items-center gap-2.5 border-r border-[#EBE6DD] pr-4 select-none">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 no-print bg-white/95 backdrop-blur-md border border-zinc-200/90 rounded-full px-4 py-2 flex items-center gap-4 shadow-xl z-30 text-xs text-zinc-900">
+        {/* Real-Time Page Budget Meter */}
+        <div className="flex items-center gap-2 border-r border-zinc-200 pr-3.5 select-none">
           <div
-            className={`w-2.5 h-2.5 rounded-full shrink-0 ${
-              !isOverflowingPage1 ? 'bg-[#10B981]' : 'bg-[#F59E0B]'
+            className={`w-2 h-2 rounded-full shrink-0 ${
+              !isOverflowingPage1 ? 'bg-emerald-500' : 'bg-amber-500'
             }`}
           />
-          <div className="flex flex-col text-[#1A1917]/90 text-[10.5px] font-bold uppercase tracking-wider leading-tight">
+          <div className="flex flex-col text-zinc-800 text-[10px] font-mono font-bold uppercase tracking-wider leading-tight">
             {!isOverflowingPage1 ? (
               <>
-                <span>Page</span>
-                <span className="text-[#10B981]">{page1FillPercent}%</span>
-                <span className="text-[9px] text-[#1A1917]/50 lowercase font-normal">filled</span>
+                <span className="text-emerald-600">{page1FillPercent}% Filled</span>
               </>
             ) : (
               <>
-                <span className="text-[#F59E0B] font-extrabold">{estimatedPages}</span>
-                <span>Pages</span>
+                <span className="text-amber-600">{estimatedPages} Pages</span>
               </>
             )}
           </div>
@@ -283,23 +305,22 @@ export const ResumePreview: React.FC<Props> = ({
             <button
               type="button"
               onClick={onAutoFitOnePage}
-              className="flex flex-col text-left text-amber-600 hover:text-amber-700 border-l border-[#EBE6DD] pl-3.5 cursor-pointer leading-tight font-extrabold text-[10.5px] uppercase tracking-wider"
+              className="text-amber-700 hover:text-amber-900 border-l border-zinc-200 pl-3 cursor-pointer text-[10px] font-mono font-bold uppercase tracking-wider underline underline-offset-2"
             >
-              <span className="underline decoration-1 underline-offset-2">Fit 1</span>
-              <span className="underline decoration-1 underline-offset-2">Page</span>
+              Fit 1 Page
             </button>
           )}
         </div>
 
         {/* Paged vs Scroll Segmented Control */}
-        <div className="bg-[#EBE6DD]/40 p-0.5 rounded-full flex items-center gap-0.5 border border-[#EBE6DD]/60">
+        <div className="bg-zinc-100 p-0.5 rounded-full flex items-center gap-0.5 border border-zinc-200">
           <button
             type="button"
             onClick={() => setPageViewMode('paged')}
-            className={`px-3.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
+            className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all cursor-pointer ${
               pageViewMode === 'paged'
-                ? 'bg-[#1A1917] text-white shadow-xs'
-                : 'text-[#1A1917]/60 hover:text-zinc-900'
+                ? 'bg-zinc-950 text-white shadow-xs'
+                : 'text-zinc-600 hover:text-zinc-950'
             }`}
           >
             Paged
@@ -307,10 +328,10 @@ export const ResumePreview: React.FC<Props> = ({
           <button
             type="button"
             onClick={() => setPageViewMode('continuous')}
-            className={`px-3.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
+            className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all cursor-pointer ${
               pageViewMode === 'continuous'
-                ? 'bg-[#1A1917] text-white shadow-xs'
-                : 'text-[#1A1917]/60 hover:text-zinc-900'
+                ? 'bg-zinc-950 text-white shadow-xs'
+                : 'text-zinc-600 hover:text-zinc-950'
             }`}
           >
             Scroll
@@ -318,12 +339,12 @@ export const ResumePreview: React.FC<Props> = ({
         </div>
 
         {/* Zoom Controls */}
-        <div className="flex items-center gap-1.5 bg-[#EBE6DD]/30 px-1.5 py-0.5 rounded-full border border-[#EBE6DD]/40">
+        <div className="flex items-center gap-1 bg-zinc-100 px-2 py-0.5 rounded-full border border-zinc-200 text-xs">
           <button
             type="button"
             onClick={() => setZoomLevel((z) => Math.max(40, z - 10))}
             disabled={zoomLevel <= 40}
-            className="w-6 h-6 flex items-center justify-center rounded-full text-[#1A1917]/60 hover:bg-[#EBE6DD]/60 hover:text-[#1A1917] disabled:opacity-30 cursor-pointer font-bold text-sm transition-colors"
+            className="w-5 h-5 flex items-center justify-center rounded-full text-zinc-600 hover:bg-zinc-200 hover:text-zinc-950 disabled:opacity-30 cursor-pointer font-bold text-xs transition-colors"
             title="Zoom Out"
           >
             -
@@ -331,7 +352,7 @@ export const ResumePreview: React.FC<Props> = ({
           <button
             type="button"
             onClick={() => setZoomLevel(100)}
-            className="min-w-[34px] text-center text-[11px] font-bold text-[#1A1917]/80 hover:text-[#1A1917] cursor-pointer"
+            className="min-w-[32px] text-center text-[10px] font-mono font-semibold text-zinc-700 hover:text-zinc-950 cursor-pointer"
             title="Reset Zoom to 100%"
           >
             {zoomLevel}%
@@ -340,7 +361,7 @@ export const ResumePreview: React.FC<Props> = ({
             type="button"
             onClick={() => setZoomLevel((z) => Math.min(140, z + 10))}
             disabled={zoomLevel >= 140}
-            className="w-6 h-6 flex items-center justify-center rounded-full text-[#1A1917]/60 hover:bg-[#EBE6DD]/60 hover:text-[#1A1917] disabled:opacity-30 cursor-pointer font-bold text-sm transition-colors"
+            className="w-5 h-5 flex items-center justify-center rounded-full text-zinc-600 hover:bg-zinc-200 hover:text-zinc-950 disabled:opacity-30 cursor-pointer font-bold text-xs transition-colors"
             title="Zoom In"
           >
             +
