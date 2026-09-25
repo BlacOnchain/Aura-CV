@@ -79,8 +79,9 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
           throw new Error(data.message || 'Failed to dispatch reset link');
         }
         setResetDispatched(true);
-        setSuccessMessage(data.message || 'Password reset link has been dispatched to your email.');
-        if (data.preview_token) {
+        setSuccessMessage(data.message || 'Password reset link has been sent to your email.');
+        // Only allow preview token in local development builds
+        if (import.meta.env.DEV && data.preview_token) {
           setPreviewToken(data.preview_token);
         }
         setIsResetting(false);
@@ -96,8 +97,10 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
 
     // Static mode reset link simulation
     setResetDispatched(true);
-    setSuccessMessage('Password reset instructions dispatched! Demonstration reset token generated.');
-    setPreviewToken('demo-reset-token-777');
+    setSuccessMessage('Password reset instructions sent to your email.');
+    if (import.meta.env.DEV) {
+      setPreviewToken('demo-reset-token-777');
+    }
     setIsResetting(false);
   };
 
@@ -240,8 +243,8 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
       {/* Right Side: Auth / Forgot Password Form */}
       <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-8 lg:p-20 relative bg-white overflow-y-auto">
         <div className="w-full max-w-[420px] relative z-10 py-6">
-          {/* Mobile Back Button */}
-          <div className="lg:hidden mb-6">
+          {/* Mobile Back Button & Compact Trust Strip */}
+          <div className="lg:hidden mb-6 flex items-center justify-between gap-2 border-b border-zinc-100 pb-3.5">
             <button
               type="button"
               onClick={onBack}
@@ -250,6 +253,10 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Studio</span>
             </button>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 text-zinc-700 text-[11px] font-medium border border-zinc-200 shrink-0">
+              <ShieldCheck className="w-3.5 h-3.5 text-zinc-900 shrink-0" />
+              <span>TLS Encrypted</span>
+            </div>
           </div>
 
           <div className="mb-8 sm:mb-10 text-center lg:text-left">
@@ -266,13 +273,13 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
 
             <h2 className="text-3xl sm:text-4xl font-display text-zinc-900 mb-2 font-bold">
               {isForgotPassword 
-                ? (resetDispatched ? 'Verify Reset Token' : 'Recover Credentials') 
-                : (isLogin ? 'Access Session' : 'New Studio Session')}
+                ? (resetDispatched ? 'Reset Password' : 'Forgot Password') 
+                : (isLogin ? 'Sign In' : 'Create Account')}
             </h2>
-            <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest">
+            <p className="text-zinc-500 text-xs font-medium">
               {isForgotPassword
-                ? (resetDispatched ? 'Enter token & define your new password.' : 'Enter email to receive a password reset link.')
-                : (isLogin ? 'Initialize your professional workspace.' : 'Begin your career engineering journey.')}
+                ? (resetDispatched ? 'Enter verification token and set your new password.' : 'Enter your registered email to receive a password reset link.')
+                : (isLogin ? 'Sign in to access your saved resumes and studio workspace.' : 'Create your free account to build executive resumes.')}
             </p>
           </div>
 
@@ -319,14 +326,14 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
                   <form onSubmit={handleSendResetLink} className="space-y-4">
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">
-                        Registered Email Address
+                        Email Address
                       </label>
                       <div className="relative group">
                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 group-focus-within:text-zinc-900 transition-colors" />
                         <input 
                           type="email" 
                           required
-                          placeholder="identity@auracv.com"
+                          placeholder="you@example.com"
                           value={forgotEmail || email}
                           onChange={(e) => {
                             setForgotEmail(e.target.value);
@@ -342,7 +349,7 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
                       disabled={isResetting}
                       className="min-h-[48px] w-full py-3.5 bg-zinc-950 hover:bg-zinc-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all active:scale-[0.98] shadow-md shadow-zinc-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-4"
                     >
-                      {isResetting ? 'Dispatching Link...' : 'Send Password Reset Link'}
+                      {isResetting ? 'Sending Request...' : 'Send Reset Link'}
                       {!isResetting && <ArrowRight className="w-4 h-4" />}
                     </button>
 
@@ -362,17 +369,17 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
                 ) : (
                   /* Step 2: Enter token & new password */
                   <form onSubmit={handleCompleteReset} className="space-y-4">
-                    {/* Test helper widget showing preview token if present */}
-                    {previewToken && (
+                    {/* Dev-only helper widget showing preview token */}
+                    {import.meta.env.DEV && previewToken && (
                       <div className="p-3 bg-zinc-100 rounded-xl border border-zinc-200 space-y-1.5 text-xs">
                         <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-zinc-500">
-                          <span>Verification Token (Simulated)</span>
+                          <span>[DEV ONLY] Token Preview</span>
                           <button
                             type="button"
                             onClick={() => setResetToken(previewToken)}
                             className="text-emerald-700 hover:text-emerald-900 font-bold underline cursor-pointer"
                           >
-                            Auto-fill Token
+                            Auto-fill
                           </button>
                         </div>
                         <div className="font-mono text-[11px] text-zinc-800 break-all bg-white p-2 rounded border border-zinc-200/80">
@@ -437,7 +444,7 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
                       disabled={isResetting}
                       className="min-h-[48px] w-full py-3.5 bg-zinc-950 hover:bg-zinc-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all active:scale-[0.98] shadow-md shadow-zinc-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-4"
                     >
-                      {isResetting ? 'Updating Credentials...' : 'Update Password'}
+                      {isResetting ? 'Updating...' : 'Update Password'}
                       {!isResetting && <ArrowRight className="w-4 h-4" />}
                     </button>
 
@@ -446,7 +453,7 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
                       onClick={() => setResetDispatched(false)}
                       className="min-h-[44px] w-full py-2.5 text-xs font-semibold text-zinc-500 hover:text-zinc-900 transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                     >
-                      <span>Request a different token</span>
+                      <span>Request a new token</span>
                     </button>
                   </form>
                 )
@@ -455,13 +462,13 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {!isLogin && (
                     <div className="space-y-1.5">
-                      <label className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest ml-1">Full Identity</label>
+                      <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Full Name</label>
                       <div className="relative group">
                         <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 group-focus-within:text-zinc-900 transition-colors" />
                         <input 
                           type="text" 
                           required
-                          placeholder="Julian Vane"
+                          placeholder="Alex Morgan"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           className="w-full pl-11 pr-4 py-3.5 bg-zinc-50 border border-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-zinc-900/10 focus:border-zinc-900 transition-all font-medium text-zinc-900 placeholder:text-zinc-400 text-sm"
@@ -471,13 +478,13 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
                   )}
 
                   <div className="space-y-1.5">
-                    <label className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest ml-1">Secure Email</label>
+                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Email Address</label>
                     <div className="relative group">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 group-focus-within:text-zinc-900 transition-colors" />
                       <input 
                         type="email" 
                         required
-                        placeholder="identity@auracv.com"
+                        placeholder="you@example.com"
                         value={email}
                         onChange={(e) => {
                           setEmail(e.target.value);
@@ -490,7 +497,7 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
 
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between ml-1">
-                      <label className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">Password</label>
+                      <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Password</label>
                       {isLogin && (
                         <button
                           type="button"
@@ -523,7 +530,7 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
                     disabled={isLoading}
                     className="min-h-[48px] w-full py-3.5 bg-zinc-950 hover:bg-zinc-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all active:scale-[0.98] shadow-md shadow-zinc-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-4"
                   >
-                    {isLoading ? 'Syncing...' : (isLogin ? 'Access Session' : 'Create Session')}
+                    {isLoading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
                     {!isLoading && <ArrowRight className="w-4 h-4" />}
                   </button>
                 </form>
@@ -534,7 +541,7 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
                 <>
                   <div className="relative my-6 sm:my-7">
                     <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-zinc-100"></div></div>
-                    <div className="relative flex justify-center text-[9px] uppercase font-bold text-zinc-300 tracking-[0.3em]"><span className="bg-white px-3">Standard Providers</span></div>
+                    <div className="relative flex justify-center text-[9px] uppercase font-bold text-zinc-300 tracking-[0.3em]"><span className="bg-white px-3">Or Continue With</span></div>
                   </div>
 
                   <button 
@@ -542,7 +549,24 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
                     onClick={loginWithGoogle}
                     className="min-h-[48px] w-full flex items-center justify-center gap-3 py-3 bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 rounded-xl text-xs font-bold uppercase tracking-wider text-zinc-700 transition-all active:scale-[0.98] cursor-pointer"
                   >
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-4 h-4" alt="" />
+                    <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        fill="#4285F4"
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                      />
+                      <path
+                        fill="#34A853"
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                      />
+                      <path
+                        fill="#FBBC05"
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                      />
+                      <path
+                        fill="#EA4335"
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                      />
+                    </svg>
                     <span>Continue with Google</span>
                   </button>
                 </>
@@ -560,12 +584,12 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
                   setError('');
                   setSuccessMessage('');
                 }}
-                className="min-h-[44px] px-3 py-2 text-xs font-bold text-zinc-400 hover:text-zinc-900 uppercase tracking-wider transition-colors cursor-pointer inline-flex items-center justify-center"
+                className="min-h-[44px] px-3 py-2 text-xs font-semibold text-zinc-500 hover:text-zinc-900 transition-colors cursor-pointer inline-flex items-center justify-center"
               >
                 {isLogin ? (
-                  <>New to the studio? <span className="text-zinc-950 underline underline-offset-4 ml-1.5 font-bold">Create Identity</span></>
+                  <>New to AuraCV Studio? <span className="text-zinc-950 underline underline-offset-4 ml-1.5 font-bold">Create an account</span></>
                 ) : (
-                  <>Existing Identity? <span className="text-zinc-950 underline underline-offset-4 ml-1.5 font-bold">Sign in instead</span></>
+                  <>Already have an account? <span className="text-zinc-950 underline underline-offset-4 ml-1.5 font-bold">Sign in</span></>
                 )}
               </button>
             </div>
