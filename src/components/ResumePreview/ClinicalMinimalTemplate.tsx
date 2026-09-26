@@ -18,8 +18,8 @@ export const ClinicalMinimalTemplate: React.FC<Props> = ({ data }) => {
         <p className="text-sm font-bold uppercase tracking-[0.2em] mb-4" style={{ color: accent }}>{personal.title}</p>
         
         <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-[11px] font-medium text-slate-400">
-          {personal.email && <span>{personal.email}</span>}
-          {personal.phone && <span>{personal.phone}</span>}
+          {personal.email && <a href={`mailto:${personal.email}`} className="hover:underline">{personal.email}</a>}
+          {personal.phone && <a href={`tel:${personal.phone}`} className="hover:underline">{personal.phone}</a>}
           {personal.location && <span>{personal.location}</span>}
         </div>
       </header>

@@ -57,6 +57,15 @@ h1, h2, h3, h4, .font-display {
       display: none !important;
     }
 
+    .print-resume-scale-wrapper {
+      transform: none !important;
+      width: 100% !important;
+      min-height: auto !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
     #printable-resume {
       box-shadow: none !important;
       border: none !important;

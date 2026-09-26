@@ -109,10 +109,13 @@ export const FlowModernaTemplate: React.FC<Props> = ({ data }) => {
               </a>
             )}
             {personal.phone && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white border border-slate-200/90 shadow-2xs">
+              <a
+                href={`tel:${personal.phone}`}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white border border-slate-200/90 shadow-2xs hover:border-slate-300 transition-colors"
+              >
                 <Phone className="w-3.5 h-3.5" style={{ color: accent }} />
                 <span>{personal.phone}</span>
-              </span>
+              </a>
             )}
             {personal.location && (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white border border-slate-200/90 shadow-2xs">

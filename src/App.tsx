@@ -62,7 +62,11 @@ const INITIAL_RESUMES: SavedResume[] = [
 
 export default function App() {
   const { user, loading } = useAuth();
-  const [authView, setAuthView] = useState<'landing' | 'login' | 'register'>('landing');
+  const [authView, setAuthView] = useState<'landing' | 'login' | 'register' | 'reset-password'>(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('action') === 'reset-password') return 'reset-password';
+    return 'landing';
+  });
   const [appView, setAppView] = useState<'dashboard' | 'editor'>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_VIEW);
@@ -259,7 +263,7 @@ export default function App() {
           </motion.div>
         ) : (
           <motion.div key="auth" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
-            <AuthPage onBack={() => setAuthView('landing')} initialMode={authView === 'login' ? 'login' : 'register'} />
+            <AuthPage onBack={() => setAuthView('landing')} initialMode={authView === 'login' ? 'login' : authView === 'reset-password' ? 'reset-password' : 'register'} />
           </motion.div>
         )}
       </AnimatePresence>

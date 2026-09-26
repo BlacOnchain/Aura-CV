@@ -223,7 +223,7 @@ export const ResumePreview: React.FC<Props> = ({
               transformOrigin: 'top center',
               width: '820px',
             }}
-            className="transition-transform duration-200 shrink-0 shadow-xl rounded-xs"
+            className="print-resume-scale-wrapper transition-transform duration-200 shrink-0 shadow-xl rounded-xs"
           >
             {/* Main Paper Sheet */}
             <div

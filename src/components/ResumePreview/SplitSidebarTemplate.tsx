@@ -36,13 +36,13 @@ export const SplitSidebarTemplate: React.FC<Props> = ({ data }) => {
             {personal.email && (
               <div className="flex items-center gap-2 break-all">
                 <Mail className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
-                <span>{personal.email}</span>
+                <a href={`mailto:${personal.email}`} className="hover:text-white hover:underline transition-colors">{personal.email}</a>
               </div>
             )}
             {personal.phone && (
               <div className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
-                <span>{personal.phone}</span>
+                <a href={`tel:${personal.phone}`} className="hover:text-white hover:underline transition-colors">{personal.phone}</a>
               </div>
             )}
             {personal.location && (

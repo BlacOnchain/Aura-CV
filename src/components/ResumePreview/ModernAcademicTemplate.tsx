@@ -37,13 +37,13 @@ export const ModernAcademicTemplate: React.FC<Props> = ({ data }) => {
           {personal.email && (
             <div className="flex items-center gap-1.5 hover:text-slate-900 transition-colors">
               <Mail className="w-3 h-3" style={{ color: accentColor }} />
-              <span>{personal.email}</span>
+              <a href={`mailto:${personal.email}`} className="hover:underline">{personal.email}</a>
             </div>
           )}
           {personal.phone && (
             <div className="flex items-center gap-1.5 hover:text-slate-900 transition-colors">
               <Phone className="w-3 h-3" style={{ color: accentColor }} />
-              <span>{personal.phone}</span>
+              <a href={`tel:${personal.phone}`} className="hover:underline">{personal.phone}</a>
             </div>
           )}
           {personal.location && (

@@ -66,7 +66,9 @@ export const FlowCreativeTemplate: React.FC<Props> = ({ data }) => {
           {personal.phone && (
             <div className="flex items-center gap-2">
               <Phone className="w-3.5 h-3.5 text-white/70 shrink-0" />
-              <span>{personal.phone}</span>
+              <a href={`tel:${personal.phone}`} className="hover:text-white transition-colors underline decoration-white/30 underline-offset-2">
+                {personal.phone}
+              </a>
             </div>
           )}
           {personal.location && (

@@ -34,7 +34,7 @@ export const ClassicElegantTemplate: React.FC<Props> = ({ data }) => {
           {personal.phone && (
             <span className="flex items-center">
               <span className="mx-1">•</span>
-              {personal.phone}
+              <a href={`tel:${personal.phone}`} className="hover:underline">{personal.phone}</a>
             </span>
           )}
           {personal.location && (

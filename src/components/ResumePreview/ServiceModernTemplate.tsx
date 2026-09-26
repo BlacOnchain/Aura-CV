@@ -20,8 +20,8 @@ export const ServiceModernTemplate: React.FC<Props> = ({ data }) => {
         </div>
         
         <div className="grid grid-cols-1 gap-1 text-xs font-bold text-slate-500">
-          {personal.email && <div className="flex items-center gap-2"><Mail className="w-3 h-3" /> {personal.email}</div>}
-          {personal.phone && <div className="flex items-center gap-2"><Phone className="w-3 h-3" /> {personal.phone}</div>}
+          {personal.email && <div className="flex items-center gap-2"><Mail className="w-3 h-3" /> <a href={`mailto:${personal.email}`} className="hover:underline">{personal.email}</a></div>}
+          {personal.phone && <div className="flex items-center gap-2"><Phone className="w-3 h-3" /> <a href={`tel:${personal.phone}`} className="hover:underline">{personal.phone}</a></div>}
           {personal.location && <div className="flex items-center gap-2"><MapPin className="w-3 h-3" /> {personal.location}</div>}
         </div>
       </header>

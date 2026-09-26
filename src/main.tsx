@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import { AuthProvider } from './components/Auth/AuthContext';
+import { ToastProvider } from './components/Common/Toast';
 
 // Guard against third-party browser extensions (Web3 wallets like MetaMask, Phantom, etc.)
 // injecting scripts that throw 'Cannot redefine property: ethereum'
@@ -97,9 +98,11 @@ class AppErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState>
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppErrorBoundary>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </ToastProvider>
     </AppErrorBoundary>
   </StrictMode>,
 );

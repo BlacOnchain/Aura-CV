@@ -30,10 +30,10 @@ export const CreativeBoldTemplate: React.FC<Props> = ({ data }) => {
               </a>
             )}
             {personal.phone && (
-              <div className="flex items-center gap-3">
+              <a href={`tel:${personal.phone}`} className="flex items-center gap-3 hover:text-slate-300 transition-colors">
                 <Phone className="w-4 h-4 shrink-0" style={{ color: accent }} />
                 <span>{personal.phone}</span>
-              </div>
+              </a>
             )}
             {personal.portfolioUrl && (
               <a 

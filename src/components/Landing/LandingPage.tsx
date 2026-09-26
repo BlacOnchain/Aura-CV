@@ -16,6 +16,7 @@ import { PrivacyPolicyModal } from '../Legal/PrivacyPolicyModal';
 import { TermsModal } from '../Legal/TermsModal';
 import { CookieConsentBanner } from '../Legal/CookieConsentBanner';
 import { useDocumentMetadata } from '../../hooks/useDocumentMetadata';
+import { BrandLogo } from '../Brand/BrandLogo';
 
 interface Props {
   onStart: (mode?: 'login' | 'register') => void;
@@ -31,18 +32,15 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
     <div className="min-h-screen bg-zinc-50/60 overflow-x-hidden selection:bg-zinc-900 selection:text-white font-body text-zinc-900 w-full max-w-full">
       {/* Navigation Header */}
       <header className="fixed top-0 left-0 right-0 h-16 sm:h-20 z-50 px-4 sm:px-8 lg:px-12 flex items-center justify-between glass-surface border-x-0 border-t-0">
-        <div className="flex items-center gap-2.5 shrink-0">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 bg-zinc-900 rounded-lg flex items-center justify-center shadow-2xs shrink-0">
-            <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-base sm:text-lg font-display font-bold text-zinc-900 tracking-tight leading-none">
-              AuraCV Studio
-            </span>
-            <span className="text-[9px] sm:text-[10px] text-zinc-400 font-medium tracking-wide">
-              Executive Resume Engineering
-            </span>
-          </div>
+        <div 
+          onClick={() => {
+            const hero = document.getElementById('hero');
+            if (hero) hero.scrollIntoView({ behavior: 'smooth' });
+            else window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="cursor-pointer group"
+        >
+          <BrandLogo size="md" />
         </div>
         
         <nav className="hidden md:flex items-center gap-6 text-xs font-medium text-zinc-500">
@@ -210,19 +208,6 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
               <FileText className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="font-display font-bold text-zinc-900 text-sm">AuraCV Studio</span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <a 
-              href="https://blaconchain.github.io/Portfolio/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-900 text-white hover:bg-zinc-800 font-medium text-[11px] transition-all shadow-xs group"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Creator Portfolio</span>
-              <ExternalLink className="w-3 h-3 text-zinc-400 group-hover:text-white transition-colors" />
-            </a>
           </div>
 
           <div className="flex items-center gap-3 text-[11px]">

@@ -16,13 +16,16 @@ import { useAuth } from './AuthContext';
 
 interface Props {
   onBack: () => void;
-  initialMode?: 'login' | 'register';
+  initialMode?: 'login' | 'register' | 'reset-password';
 }
 
 export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => {
   const { loginWithGoogle, loginWithEmail, registerWithEmail } = useAuth();
   const [isLogin, setIsLogin] = useState(initialMode === 'login');
-  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(() => {
+    if (initialMode === 'reset-password') return true;
+    return false;
+  });
   
   // Standard Auth Form state
   const [email, setEmail] = useState('');
@@ -33,11 +36,26 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
   const [isLoading, setIsLoading] = useState(false);
 
   // Forgot Password / Reset Flow state
-  const [forgotEmail, setForgotEmail] = useState('');
-  const [resetToken, setResetToken] = useState('');
+  const [forgotEmail, setForgotEmail] = useState(() => {
+    if (initialMode === 'reset-password') {
+      const p = new URLSearchParams(window.location.search);
+      return p.get('email') || '';
+    }
+    return '';
+  });
+  const [resetToken, setResetToken] = useState(() => {
+    if (initialMode === 'reset-password') {
+      const p = new URLSearchParams(window.location.search);
+      return p.get('token') || '';
+    }
+    return '';
+  });
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [resetDispatched, setResetDispatched] = useState(false);
+  const [resetDispatched, setResetDispatched] = useState(() => {
+    if (initialMode === 'reset-password') return true;
+    return false;
+  });
   const [previewToken, setPreviewToken] = useState<string | null>(null);
   const [isResetting, setIsResetting] = useState(false);
 

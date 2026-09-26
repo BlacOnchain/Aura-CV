@@ -40,13 +40,13 @@ export const ExecutiveModernTemplate: React.FC<Props> = ({ data }) => {
           {personal.email && (
             <div className="flex items-center gap-1">
               <Mail className="w-3.5 h-3.5 text-slate-900" />
-              <span>{personal.email}</span>
+              <a href={`mailto:${personal.email}`} className="hover:underline">{personal.email}</a>
             </div>
           )}
           {personal.phone && (
             <div className="flex items-center gap-1">
               <Phone className="w-3.5 h-3.5 text-slate-900" />
-              <span>{personal.phone}</span>
+              <a href={`tel:${personal.phone}`} className="hover:underline">{personal.phone}</a>
             </div>
           )}
           {personal.twitterUrl && (

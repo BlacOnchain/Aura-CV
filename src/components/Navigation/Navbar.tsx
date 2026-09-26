@@ -3,6 +3,7 @@ import { ResumeData } from '../../types/resume';
 import { DESIGN_PALETTES, getPaletteByHex } from '../../utils/theme';
 import { isAIQuotaExceeded } from '../../utils/aiClient';
 import { useAuth } from '../Auth/AuthContext';
+import { BrandLogo } from '../Brand/BrandLogo';
 import {
   FileText,
   Edit3,
@@ -44,6 +45,7 @@ export const Navbar: React.FC<Props> = ({
   viewMode,
   onChangeViewMode,
   onDownloadPdf,
+  isSaved,
 }) => {
   const [isRenaming, setIsRenaming] = useState(false);
   const [tempName, setTempName] = useState(activeResumeName || 'My Resume');
@@ -75,10 +77,7 @@ export const Navbar: React.FC<Props> = ({
             className="flex items-center gap-3 group/brand cursor-pointer text-left focus:outline-none"
             title="AuraCV Dashboard"
           >
-            <div className="w-8 h-8 bg-zinc-900 rounded flex items-center justify-center shadow-lg">
-              <FileText className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-lg font-display font-bold text-zinc-900 italic hidden lg:block">AuraCV Studio</span>
+            <BrandLogo size="sm" accentColor={accentColor} />
           </button>
 
           <span className="text-zinc-200 hidden md:inline">/</span>
@@ -117,8 +116,18 @@ export const Navbar: React.FC<Props> = ({
               >
                 <Edit3 className="w-3 h-3" />
               </button>
-              <div className="w-1 h-1 rounded-full bg-zinc-100 ml-2" />
-              <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-200 ml-1">Synchronized</span>
+              <div className="w-1 h-1 rounded-full bg-zinc-200 ml-2" />
+              {isSaved ? (
+                <div className="flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-medium tracking-wide border border-emerald-200/60 transition-all animate-pulse shadow-2xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                  <span>Auto-saving...</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-full bg-zinc-50 text-zinc-600 text-[10px] font-medium tracking-wide border border-zinc-200/60">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span>All changes saved</span>
+                </div>
+              )}
             </div>
           )}
         </div>

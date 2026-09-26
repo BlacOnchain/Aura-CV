@@ -38,13 +38,13 @@ export const ImpactHospitalityTemplate: React.FC<Props> = ({ data }) => {
             {personal.email && (
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-zinc-500" />
-                <span>{personal.email}</span>
+                <a href={`mailto:${personal.email}`} className="hover:text-white transition-colors">{personal.email}</a>
               </div>
             )}
             {personal.phone && (
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-zinc-500" />
-                <span>{personal.phone}</span>
+                <a href={`tel:${personal.phone}`} className="hover:text-white transition-colors">{personal.phone}</a>
               </div>
             )}
             {personal.location && (

@@ -39,8 +39,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const apiUrl = import.meta.env.VITE_API_URL || '';
 
   useEffect(() => {
-    // Check for token in URL (callback from Google)
+    // Check for password reset action in URL specifically before generic OAuth token check
     const urlParams = new URLSearchParams(window.location.search);
+    const action = urlParams.get('action');
+    const resetTokenParam = urlParams.get('token');
+
+    if (action === 'reset-password' && resetTokenParam) {
+      setLoading(false);
+      return;
+    }
+
+    // Check for token in URL (callback from Google)
     const urlToken = urlParams.get('token');
     
     if (urlToken) {

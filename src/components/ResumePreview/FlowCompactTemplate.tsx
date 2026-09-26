@@ -39,10 +39,10 @@ export const FlowCompactTemplate: React.FC<Props> = ({ data }) => {
               </a>
             )}
             {personal.phone && (
-              <span className="flex items-center gap-1">
+              <a href={`tel:${personal.phone}`} className="flex items-center gap-1 hover:text-slate-900 transition-colors">
                 <Phone className="w-3 h-3 text-slate-400" />
                 {personal.phone}
-              </span>
+              </a>
             )}
             {personal.location && (
               <span className="flex items-center gap-1">

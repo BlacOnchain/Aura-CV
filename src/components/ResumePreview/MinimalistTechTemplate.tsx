@@ -36,14 +36,14 @@ export const MinimalistTechTemplate: React.FC<Props> = ({ data }) => {
         {/* Contact links */}
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 text-xs text-slate-600 font-mono">
           {personal.email && (
-            <span className="flex items-center gap-1 hover:text-slate-900">
+            <a href={`mailto:${personal.email}`} className="flex items-center gap-1 hover:text-slate-900 hover:underline">
               <Mail className="w-3.5 h-3.5" /> {personal.email}
-            </span>
+            </a>
           )}
           {personal.phone && (
-            <span className="flex items-center gap-1">
+            <a href={`tel:${personal.phone}`} className="flex items-center gap-1 hover:text-slate-900 hover:underline">
               <Phone className="w-3.5 h-3.5" /> {personal.phone}
-            </span>
+            </a>
           )}
           {personal.location && (
             <span className="text-slate-500">📍 {personal.location}</span>

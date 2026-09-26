@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../Auth/AuthContext';
+import { BrandLogo } from '../Brand/BrandLogo';
 import { SavedResume, ResumeData } from '../../types/resume';
 import {
   Plus,
@@ -77,10 +78,7 @@ export const ResumesDashboard: React.FC<Props> = ({
       <header className="h-20 bg-white border-b border-zinc-100 sticky top-0 z-40 px-6 lg:px-12 flex items-center justify-between">
         <div className="flex items-center gap-10">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-zinc-900 rounded flex items-center justify-center">
-              <FileText className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-display font-bold text-zinc-900 tracking-tight">AuraCV Studio</span>
+            <BrandLogo size="md" />
           </div>
 
           <nav className="hidden md:flex items-center gap-8">
