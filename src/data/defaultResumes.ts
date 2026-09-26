@@ -34,7 +34,7 @@ export const SOFTWARE_ENGINEER_RESUME: ResumeData = {
       isCurrent: true,
       descriptionBullets: [
         'Architected a next-generation event-driven microservices platform processing 25M+ daily requests, decreasing server latency by 42%.',
-        'Spearheaded a frontend migration to React 19, TypeScript, and Next.js, boosting Core Web Vitals performance score from 68 to 96.',
+        'Led a frontend migration to React 19, TypeScript, and Next.js, boosting Core Web Vitals performance score from 68 to 96.',
         'Mentored 8 full-stack engineers across code reviews, system design sessions, and test-driven development (TDD) best practices.',
         'Implemented zero-downtime CI/CD deployment pipelines using GitHub Actions, Docker, and Kubernetes on AWS ECS.',
       ],
@@ -438,7 +438,7 @@ export const PRODUCT_DESIGNER_RESUME: ResumeData = {
       endDate: 'Present',
       isCurrent: true,
       descriptionBullets: [
-        'Spearheaded the unified design system overhaul across web and mobile products, accelerating engineering frontend velocity by 35%.',
+        'Led the unified design system overhaul across web and mobile products, accelerating engineering frontend velocity by 35%.',
         'Conducted 60+ usability testing sessions and translated customer feedback into iterative UX enhancements that boosted user engagement by 27%.',
         'Championed WCAG 2.1 AA accessibility compliance across all company interfaces.',
       ],

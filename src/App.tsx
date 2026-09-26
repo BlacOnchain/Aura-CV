@@ -9,6 +9,7 @@ import { ResumeData, SavedResume } from './types/resume';
 import { useAuth } from './components/Auth/AuthContext';
 import { LandingPage } from './components/Landing/LandingPage';
 import { useSync } from './hooks/useSync';
+import { useToast } from './hooks/useToast';
 import { 
   SOFTWARE_ENGINEER_RESUME, 
   PRODUCT_MANAGER_RESUME, 
@@ -146,6 +147,8 @@ export default function App() {
 
   useSync(savedResumes);
 
+  const { showToast } = useToast();
+
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY_VIEW, appView);
@@ -211,6 +214,7 @@ export default function App() {
     setActiveResumeId(newId);
     setAppView('editor');
     setEditorTab('content');
+    showToast(`Created "${name}"`);
   };
 
   const handleDuplicateResume = (id: string) => {
@@ -220,17 +224,21 @@ export default function App() {
     const cloned = { ...source, id: newId, name: `${source.name} (Copy)`, lastModified: Date.now() };
     setSavedResumes([cloned, ...savedResumes]);
     setActiveResumeId(newId);
+    showToast(`Duplicated "${source.name}"`);
   };
 
   const handleRenameResume = (id: string, newName: string) => {
     setSavedResumes((prev) => prev.map((r) => (r.id === id ? { ...r, name: newName } : r)));
+    showToast(`Renamed to "${newName}"`);
   };
 
   const handleDeleteResume = (id: string) => {
     if (savedResumes.length <= 1) return;
+    const target = savedResumes.find((r) => r.id === id);
     const remaining = savedResumes.filter((r) => r.id !== id);
     setSavedResumes(remaining);
     if (activeResumeId === id) setActiveResumeId(remaining[0].id);
+    showToast(`Deleted "${target?.name}"`, 'error');
   };
 
   const handleClearDatabase = () => {

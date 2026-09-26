@@ -152,7 +152,7 @@ Industry: ${industryContext}
 Role: ${role || 'Professional'} ${context ? `(${context})` : ''}
 Cut all filler words, keep strong past-tense action verbs and core outcomes.`;
     } else if (mode === 'grammar') {
-      instruction = `Polish this resume bullet point for flawless professional tone, active voice, and executive vocabulary.
+      instruction = `Polish this resume bullet point for flawless professional tone and active voice.
 Industry: ${industryContext}
 Role: ${role || 'Professional'} ${context ? `(${context})` : ''}
 Eliminate weak phrases like "was responsible for" or "helped with".`;

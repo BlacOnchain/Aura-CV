@@ -88,60 +88,45 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
             animate="visible"
             className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-zinc-950 tracking-tight leading-tight"
           >
-            <div>
+            <motion.div variants={{ visible: { transition: { staggerChildren: 0.05 } } }}>
               {headlineLine1.split(' ').map((word, wI) => (
-                <React.Fragment key={wI}>
-                  <motion.span
-                    variants={{
-                      hidden: { opacity: 0 },
-                      visible: { opacity: 1, transition: { staggerChildren: 0.02 } }
-                    }}
-                    style={{ display: 'inline-block', whiteSpace: 'nowrap' }}
-                  >
-                    {word.split('').map((char, cI) => (
-                      <motion.span
-                        key={cI}
-                        variants={{
-                          hidden: { opacity: 0, y: 6, filter: 'blur(2px)' },
-                          visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.3 } }
-                        }}
-                        style={{ display: 'inline-block' }}
-                      >
-                        {char}
-                      </motion.span>
-                    ))}
-                  </motion.span>
-                  {wI < headlineLine1.split(' ').length - 1 && ' '}
-                </React.Fragment>
+                <span key={wI} style={{ display: 'inline-block', whiteSpace: 'nowrap' }} className="mr-2">
+                  {word.split('').map((char, cI) => (
+                    <motion.span
+                      key={cI}
+                      variants={{
+                        hidden: { opacity: 0 },
+                        visible: { opacity: 1, transition: { duration: 0.2 } }
+                      }}
+                      style={{ display: 'inline-block' }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
               ))}
-            </div>
-            <div className="italic font-normal text-zinc-700 mt-1">
+            </motion.div>
+            <motion.div 
+              className="italic font-normal text-zinc-700 mt-1"
+              variants={{ visible: { transition: { staggerChildren: 0.05, delayChildren: 0.2 } } }}
+            >
               {headlineLine2.split(' ').map((word, wI) => (
-                <React.Fragment key={wI}>
-                  <motion.span
-                    variants={{
-                      hidden: { opacity: 0 },
-                      visible: { opacity: 1, transition: { staggerChildren: 0.02 } }
-                    }}
-                    style={{ display: 'inline-block', whiteSpace: 'nowrap' }}
-                  >
-                    {word.split('').map((char, cI) => (
-                      <motion.span
-                        key={cI}
-                        variants={{
-                          hidden: { opacity: 0, y: 6, filter: 'blur(2px)' },
-                          visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.3 } }
-                        }}
-                        style={{ display: 'inline-block' }}
-                      >
-                        {char}
-                      </motion.span>
-                    ))}
-                  </motion.span>
-                  {wI < headlineLine2.split(' ').length - 1 && ' '}
-                </React.Fragment>
+                <span key={wI} style={{ display: 'inline-block', whiteSpace: 'nowrap' }} className="mr-2">
+                  {word.split('').map((char, cI) => (
+                    <motion.span
+                      key={cI}
+                      variants={{
+                        hidden: { opacity: 0 },
+                        visible: { opacity: 1, transition: { duration: 0.2 } }
+                      }}
+                      style={{ display: 'inline-block' }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
               ))}
-            </div>
+            </motion.div>
           </motion.h1>
 
           <p className="text-sm sm:text-base text-zinc-600 max-w-xl mx-auto leading-relaxed">
