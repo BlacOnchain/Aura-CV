@@ -5,11 +5,7 @@ import {
   FileText, 
   CheckCircle2, 
   ShieldCheck,
-  Sparkles,
-  Wand2,
-  Target,
-  FileSpreadsheet,
-  ExternalLink
+  Sparkles
 } from 'lucide-react';
 import { AuraAestheticIllustration } from './AuraAestheticIllustration';
 import { PrivacyPolicyModal } from '../Legal/PrivacyPolicyModal';
@@ -27,6 +23,9 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
 
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
+
+  const headlineLine1 = "Architect Your Career Identity.";
+  const headlineLine2 = "With Precision.";
 
   return (
     <div className="min-h-screen bg-zinc-50/60 overflow-x-hidden selection:bg-zinc-900 selection:text-white font-body text-zinc-900 w-full max-w-full">
@@ -67,23 +66,99 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
         </div>
       </header>
 
-      {/* Clean Aesthetic Hero Section */}
-      <section id="hero" className="pt-24 sm:pt-32 pb-8 sm:pb-12 px-4 sm:px-6 lg:px-12 max-w-5xl mx-auto text-center space-y-6">
+      {/* Clean Aesthetic Hero Section with Blueprint Motif Background */}
+      <section id="hero" className="relative pt-28 sm:pt-36 pb-8 sm:pb-12 px-4 sm:px-6 lg:px-12 max-w-5xl mx-auto text-center space-y-6 overflow-hidden">
+        {/* Technical Blueprint Architectural Motif Background */}
+        <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center opacity-65 select-none">
+          <svg className="w-full h-full max-w-4xl" viewBox="0 0 1000 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="blueprint-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-zinc-200/60" />
+              </pattern>
+            </defs>
+            <rect width="1000" height="600" fill="url(#blueprint-grid)" />
+            
+            {/* Architectural Crop Marks & Alignment Guides */}
+            <path d="M 40 40 L 90 40 M 40 40 L 40 90" stroke="currentColor" strokeWidth="1" className="text-zinc-300" />
+            <path d="M 960 40 L 910 40 M 960 40 L 960 90" stroke="currentColor" strokeWidth="1" className="text-zinc-300" />
+            <path d="M 40 560 L 90 560 M 40 560 L 40 510" stroke="currentColor" strokeWidth="1" className="text-zinc-300" />
+            <path d="M 960 560 L 910 560 M 960 560 L 960 510" stroke="currentColor" strokeWidth="1" className="text-zinc-300" />
+
+            {/* Schematic Resume Document Outline & Dimension Callouts */}
+            <g className="text-zinc-300/80" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4">
+              <rect x="320" y="70" width="360" height="460" rx="3" />
+            </g>
+            <g className="text-zinc-400" stroke="currentColor" strokeWidth="0.75">
+              {/* Dimension measurement line top */}
+              <path d="M 320 55 L 680 55 M 320 50 L 320 60 M 680 50 L 680 60" />
+              <text x="500" y="46" fill="currentColor" fontSize="9" fontFamily="monospace" textAnchor="middle" className="text-zinc-400">A4_WIDTH: 820px</text>
+              
+              {/* Callout lines pointing to resume sections */}
+              <path d="M 320 130 L 230 130 M 230 130 L 210 130" />
+              <text x="205" y="133" fill="currentColor" fontSize="8" fontFamily="monospace" textAnchor="end" className="text-zinc-400">SEC_01: IDENTITY</text>
+
+              <path d="M 680 220 L 770 220 M 770 220 L 790 220" />
+              <text x="795" y="223" fill="currentColor" fontSize="8" fontFamily="monospace" textAnchor="start" className="text-zinc-400">SEC_02: EXPERIENCE_BULLETS</text>
+
+              <path d="M 320 360 L 230 360 M 230 360 L 210 360" />
+              <text x="205" y="363" fill="currentColor" fontSize="8" fontFamily="monospace" textAnchor="end" className="text-zinc-400">SEC_03: ATS_SCORECARD</text>
+            </g>
+          </svg>
+        </div>
+
         <motion.div 
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="space-y-4 max-w-3xl mx-auto"
+          className="space-y-4 max-w-3xl mx-auto relative z-10"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-200 bg-white text-zinc-800 text-xs font-semibold shadow-2xs">
             <Sparkles className="w-3.5 h-3.5 text-zinc-900" />
             <span>Clean & Minimalist Resume Studio</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-zinc-950 tracking-tight leading-tight">
-            Architect Your Career Identity <br />
-            <span className="italic font-normal text-zinc-700">With Precision.</span>
-          </h1>
+          {/* Draft-In Kinetic Animated Headline */}
+          <motion.h1 
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.02, delayChildren: 0.05 }
+              }
+            }}
+            className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-zinc-950 tracking-tight leading-tight"
+          >
+            <div>
+              {headlineLine1.split('').map((char, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, y: 6, filter: 'blur(2px)' },
+                    visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.3 } }
+                  }}
+                  style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </div>
+            <div className="italic font-normal text-zinc-700 mt-1">
+              {headlineLine2.split('').map((char, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, y: 6, filter: 'blur(2px)' },
+                    visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.3 } }
+                  }}
+                  style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </div>
+          </motion.h1>
 
           <p className="text-sm sm:text-base text-zinc-600 max-w-xl mx-auto leading-relaxed">
             Format action bullets using Google XYZ metrics, audit skill coverage against ATS recruiter filters, and export print-ready A4 resumes.
