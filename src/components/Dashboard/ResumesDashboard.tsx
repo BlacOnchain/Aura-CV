@@ -86,6 +86,7 @@ export const ResumesDashboard: React.FC<Props> = ({
           <nav className="hidden md:flex items-center gap-8">
             <button className="text-[10px] font-bold uppercase tracking-widest text-zinc-900 border-b border-zinc-900 pb-1 cursor-pointer transition-colors">Resumes</button>
             <button onClick={onOpenCoverLetter} className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 hover:text-zinc-900 cursor-pointer transition-colors">Narratives</button>
+            <button onClick={onOpenImportModal} className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 hover:text-zinc-900 cursor-pointer transition-colors">Import PDF / Data</button>
           </nav>
         </div>
 
