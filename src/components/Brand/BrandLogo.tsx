@@ -27,30 +27,28 @@ export const BrandLogo: React.FC<Props> = ({
 
   return (
     <div className={`inline-flex items-center gap-2.5 ${className}`}>
-      {/* Precision Geometric Monogram */}
+      {/* Precision Document Icon */}
       <div
         className={`${iconSizes[size]} rounded-xl relative flex items-center justify-center shadow-xs transition-transform hover:scale-105 overflow-hidden`}
         style={{
-          background: `linear-gradient(135deg, ${accentColor} 0%, #18181b 100%)`,
+          backgroundColor: '#09090b',
         }}
       >
         <svg
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-4 h-4 text-white drop-shadow-xs"
+          className="w-4 h-4"
         >
-          {/* Stylized faceted 'A' glyph with precision craft angles */}
-          <path
-            d="M12 3L4 20H8.5L10.2 16H13.8L15.5 20H20L12 3Z"
-            fill="currentColor"
-            fillOpacity="0.95"
-          />
-          <path
-            d="M12 7.5L10.8 13.5H13.2L12 7.5Z"
-            fill="#18181b"
-          />
-          <circle cx="12" cy="4" r="1.5" fill="#fef08a" />
+          {/* Outline */}
+          <path d="M8 6h5l3 3v9a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M13 6v3h3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          
+          {/* Accent Line (emerald) */}
+          <line x1="9" y1="12" x2="14" y2="12" stroke={accentColor} strokeWidth="1.5" strokeLinecap="round" />
+          {/* Other lines */}
+          <line x1="9" y1="14" x2="13" y2="14" stroke="white" strokeWidth="1" strokeLinecap="round" />
+          <line x1="9" y1="16" x2="12" y2="16" stroke="#71717a" strokeWidth="1" strokeLinecap="round" />
         </svg>
       </div>
 

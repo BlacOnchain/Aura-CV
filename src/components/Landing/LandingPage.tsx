@@ -13,7 +13,6 @@ import { TermsModal } from '../Legal/TermsModal';
 import { CookieConsentBanner } from '../Legal/CookieConsentBanner';
 import { useDocumentMetadata } from '../../hooks/useDocumentMetadata';
 import { BrandLogo } from '../Brand/BrandLogo';
-import { BlueprintBackground } from '../Common/BlueprintBackground';
 
 interface Props {
   onStart: (mode?: 'login' | 'register') => void;
@@ -30,7 +29,6 @@ export const LandingPage: React.FC<Props> = ({ onStart }) => {
 
   return (
     <div className="min-h-screen bg-zinc-50/60 overflow-x-hidden selection:bg-zinc-900 selection:text-white font-body text-zinc-900 w-full max-w-full">
-      <BlueprintBackground />
       {/* Navigation Header */}
       <header className="fixed top-0 left-0 right-0 h-16 sm:h-20 z-50 px-4 sm:px-8 lg:px-12 flex items-center justify-between glass-surface border-x-0 border-t-0">
         <div 
