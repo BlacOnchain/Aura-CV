@@ -13,6 +13,7 @@ import {
   Check
 } from 'lucide-react';
 import { useAuth } from './AuthContext';
+import { BlueprintBackground } from '../Common/BlueprintBackground';
 
 interface Props {
   onBack: () => void;
@@ -84,7 +85,8 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
     setIsResetting(true);
 
     try {
-      const response = await fetch('/api/v1/forgot-password', {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/api/v1/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({ email: forgotEmail || email }),
@@ -140,7 +142,8 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
     setIsResetting(true);
 
     try {
-      const response = await fetch('/api/v1/reset-password', {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/api/v1/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
@@ -194,15 +197,10 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
     <div className="min-h-screen bg-zinc-50 flex overflow-hidden font-body selection:bg-zinc-900 selection:text-white">
       {/* Left Side: Visual & Content */}
       <div className="hidden lg:flex w-1/2 relative bg-zinc-100 border-r border-zinc-200">
-        <img 
-          src="/src/assets/images/portfolio_coverletter_package_1790341270829.jpg" 
-          alt="Professional Resume and Cover Letter Package" 
-          referrerPolicy="no-referrer"
-          className="absolute inset-0 w-full h-full object-cover opacity-35"
-        />
+        <BlueprintBackground />
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-50 via-zinc-50/20 to-transparent" />
         
-        <div className="relative z-10 p-20 flex flex-col justify-between h-full">
+        <div className="relative z-10 p-10 xl:p-20 flex flex-col justify-between h-full">
           <motion.button
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
@@ -222,7 +220,7 @@ export const AuthPage: React.FC<Props> = ({ onBack, initialMode = 'login' }) => 
               <div className="w-10 h-10 bg-white border border-zinc-200 rounded-lg flex items-center justify-center mb-8 shadow-sm">
                 <ShieldCheck className="w-5 h-5 text-zinc-900" />
               </div>
-              <h1 className="text-6xl font-display leading-[1.1] text-zinc-900 font-bold">
+              <h1 className="text-5xl lg:text-6xl font-display leading-[1.1] text-zinc-900 font-bold">
                 Your professional <br />
                 <span className="italic font-normal">Architectural identity.</span>
               </h1>
