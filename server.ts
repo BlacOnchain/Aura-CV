@@ -235,20 +235,25 @@ app.post('/api/ai/ats-analyze', async (req, res) => {
   }
 
   const runHeuristicATS = (error?: any) => {
+    const jdLower = jobDescription.toLowerCase();
+    const stopWords = new Set(['and', 'the', 'for', 'with', 'you', 'your', 'our', 'are', 'that', 'this', 'from', 'have', 'will', 'all', 'can', 'not', 'they', 'our', 'out', 'per', 'who', 'what', 'when', 'where', 'why', 'how', 'each', 'any', 'both', 'few', 'more', 'most', 'other', 'some', 'such', 'than', 'too', 'very', 'just', 'should', 'would', 'could', 'about', 'after', 'before', 'between', 'during', 'under', 'over', 'again', 'further', 'then', 'once', 'here', 'there', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'no', 'nor', 'only', 'own', 'same', 'so', 'as', 'at', 'by', 'an', 'a', 'is', 'it', 'be', 'or', 'of', 'to', 'in']);
+    
+    const words = jdLower.replace(/[^\w\s]/g, ' ').split(/\s+/).filter((w: string) => w.length >= 3 && !stopWords.has(w));
+    const uniqueJdWords = Array.from(new Set(words)).slice(0, 25);
+    
     const resumeLower = resumeText.toLowerCase();
-    const commonKeywords = ['sql', 'laravel', 'php', 'git', 'api', 'database', 'backend', 'pwa', 'docker', 'python', 'javascript', 'typescript', 'react', 'rest', 'linux', 'testing', 'mysql', 'architecture'];
-    const matched = commonKeywords.filter(k => resumeLower.includes(k) && jobDescription.toLowerCase().includes(k));
-    const missing = commonKeywords.filter(k => jobDescription.toLowerCase().includes(k) && !resumeLower.includes(k));
-    const baseScore = Math.min(95, Math.max(62, Math.round(((matched.length + 1) / (matched.length + missing.length + 1)) * 100)));
+    const matched = uniqueJdWords.filter(k => resumeLower.includes(k));
+    const missing = uniqueJdWords.filter(k => !resumeLower.includes(k));
+    const baseScore = Math.min(95, Math.max(62, Math.round(((matched.length + 1) / (uniqueJdWords.length || 1)) * 100)));
 
     return {
       score: baseScore,
-      matchedKeywords: matched.length > 0 ? matched : ['backend', 'database', 'git', 'sql'],
-      missingKeywords: missing.length > 0 ? missing : ['docker', 'ci/cd', 'unit testing'],
+      matchedKeywords: matched.length > 0 ? matched : uniqueJdWords.slice(0, 4),
+      missingKeywords: missing.length > 0 ? missing : uniqueJdWords.slice(4, 8),
       recommendations: [
-        'Incorporate relevant domain keywords from the target job specs into your experience bullet points.',
-        'Quantify accomplishments with concrete outcomes (% speedup, hours saved, volume).',
-        'Align your project section titles with common industry job designations.'
+        'Incorporate relevant domain keywords from the target job description into your experience bullet points.',
+        'Quantify accomplishments with concrete outcomes and metrics.',
+        'Align your resume professional title and core competencies directly with the role requirements.'
       ],
       source: 'heuristic',
       isQuotaExceeded: error?.status === 'RESOURCE_EXHAUSTED' || error?.code === 429
