@@ -4,7 +4,7 @@ import {
   Bot, 
   Target, 
   FileText, 
-  Download, 
+  Upload, 
   Database, 
   FolderOpen,
   User,
@@ -24,7 +24,7 @@ export const MobileToolSheet: React.FC<Props> = ({ isOpen, onClose, onSelectTool
     { id: 'ai-tools', icon: Bot, label: 'AI Writing Suite', desc: 'Google XYZ bullet & summary polish' },
     { id: 'ats-scanner', icon: Target, label: 'ATS Job Scanner', desc: 'Recruiter algorithm keyword audit' },
     { id: 'cover-letter', icon: FileText, label: 'Cover Letter Architect', desc: 'Generate tailored executive cover letters' },
-    { id: 'import', icon: Download, label: 'Import / LinkedIn', desc: 'PDF upload & LinkedIn profile sync' },
+    { id: 'import', icon: Upload, label: 'Import / LinkedIn', desc: 'PDF upload & LinkedIn profile sync' },
   ];
 
   return (

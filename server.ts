@@ -167,12 +167,15 @@ Rules:
 - Keep it concise (1-2 sentences max, 15-30 words).`;
     }
 
-    const prompt = `You are a world-class executive resume writer and career coach specializing in ATS optimization for the ${industryContext} industry.
+    const prompt = `You are an expert resume writer. Help me improve this bullet point.
 Original Bullet Point: "${clean}"
 
 ${instruction}
 
-Return ONLY the single rewritten bullet point string with NO quotes, markdown asterisks/bullets, or commentary.`;
+Guidelines:
+- Use a natural, professional human tone.
+- Avoid inflated vocabulary, buzzwords, or sounding like AI.
+- Return ONLY the single rewritten bullet point string with NO quotes, markdown asterisks/bullets, or commentary.`;
 
     const response = await callAIGemini(prompt);
 
@@ -180,9 +183,9 @@ Return ONLY the single rewritten bullet point string with NO quotes, markdown as
     return res.json({ enhanced: text, source: 'gemini', detectedIndustry: industryContext });
   } catch (error: any) {
     console.warn('Gemini enhance bullet error, using fallback:', error?.message);
-    const verbs = ['Spearheaded', 'Orchestrated', 'Optimized', 'Facilitated', 'Implemented', 'Streamlined'];
+    const verbs = ['Built', 'Launched', 'Created', 'Designed', 'Improved', 'Led', 'Reduced', 'Increased', 'Solved'];
     const picked = verbs[Math.floor(Math.random() * verbs.length)];
-    const improved = `${picked} ${clean.replace(/^(managed|helped|did|worked on|was responsible for)\s+/i, '')} resulting in measurable improvements and high-quality deliverables.`;
+    const improved = `${picked} ${clean.replace(/^(managed|helped|did|worked on|was responsible for|spearheaded|orchestrated|facilitated)\s+/i, '')}.`;
     return res.json({ 
       enhanced: improved, 
       source: 'heuristic-fallback',

@@ -3,7 +3,7 @@ import {
   Bot, 
   Sparkles, 
   FileText, 
-  Download, 
+  Upload, 
   Database, 
   FolderOpen,
   Settings,
@@ -23,11 +23,11 @@ interface Props {
 export const UtilityRail: React.FC<Props> = ({ activeTool, onSelectTool }) => {
   const { logout } = useAuth();
   const tools: { id: ToolView; icon: any; label: string }[] = [
-    { id: 'my-resumes', icon: FolderOpen, label: 'Collection' },
+    { id: 'my-resumes', icon: FolderOpen, label: 'My Resumes' },
     { id: 'ai-tools', icon: Bot, label: 'AI Suite' },
-    { id: 'ats-scanner', icon: Target, label: 'Align' },
-    { id: 'cover-letter', icon: FileText, label: 'Narrative' },
-    { id: 'import', icon: Download, label: 'Bridge' },
+    { id: 'ats-scanner', icon: Target, label: 'ATS Check' },
+    { id: 'cover-letter', icon: FileText, label: 'Cover Letter' },
+    { id: 'import', icon: Upload, label: 'Import' },
   ];
 
   return (

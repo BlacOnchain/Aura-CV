@@ -53,7 +53,7 @@ export const MyResumesView: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col h-full bg-transparent">
+    <div className="flex flex-col h-full bg-transparent max-w-4xl mx-auto w-full">
       {/* Header Banner */}
       <div className="bg-white p-5 rounded-2xl border border-zinc-200 shadow-2xs flex items-center justify-between shrink-0 mb-5">
         <div className="flex items-center gap-3.5">
